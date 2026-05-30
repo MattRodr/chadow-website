@@ -6,36 +6,67 @@ import Topbar from "../components/Topbar.astro";
 import Footer from "../components/Footer.astro";
 import Lightbox from "../components/Lightbox.astro";
 import { site } from "../data/site";
+import { getLang, getT } from "../i18n/utils";
 
 interface Props {
+  /** Page title. Omit on the homepage to use the full descriptive site title. */
   title?: string;
   description?: string;
   noindex?: boolean;
 }
+
+const lang = getLang(Astro);
+const t = getT(lang);
+
 const {
-  title = `${site.name} — ${site.role} based in ${site.city}`,
-  description = site.description,
+  title,
+  description = t.seo.description,
   noindex = false,
 } = Astro.props;
+
+// Homepage → rich descriptive title. Inner pages → "Page — CHADOW · Montréal".
+const pageTitle = title ? `${title} · ${t.seo.titleSuffix}` : t.seo.siteTitle;
+
+// Absolute URLs for canonical + social cards.
+const canonicalURL = new URL(Astro.url.pathname, site.url).href;
+const ogImageURL = new URL(site.ogImage, site.url).href;
+const ogLocale = lang === "fr" ? "fr_CA" : "en_CA";
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{title}</title>
+
+  <title>{pageTitle}</title>
   <meta name="description" content={description} />
-  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  <link rel="canonical" href={canonicalURL} />
+  {noindex
+    ? <meta name="robots" content="noindex, nofollow" />
+    : <meta name="robots" content="index, follow" />}
+
+  <meta name="author" content={site.owner} />
+  <meta name="theme-color" content="#000000" />
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
+  <!-- Open Graph (Facebook, LinkedIn, iMessage…) -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content={title} />
+  <meta property="og:site_name" content={site.name} />
+  <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
-  <meta property="og:url" content={site.url} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:image" content={ogImageURL} />
+  <meta property="og:locale" content={ogLocale} />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageURL} />
 
   <ClientRouter />
   <script>

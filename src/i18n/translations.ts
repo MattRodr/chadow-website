@@ -5,6 +5,15 @@ export const translations = {
     role: "Photographer · Videographer",
     city: "Montreal",
 
+    seo: {
+      // Homepage <title> — keep under ~60 characters
+      siteTitle: "CHADOW — Event & Music Photographer in Montréal",
+      // Appended to inner-page titles → e.g. "About — CHADOW · Montréal"
+      titleSuffix: "CHADOW · Montréal",
+      description:
+        "CHADOW — event & music photographer in Montréal. Concerts, nightlife, portraits and brand events captured with raw, authentic energy. Book Ambre Bangoura.",
+    },
+
     nav: {
       home: "Home",
       about: "About",
@@ -197,6 +206,13 @@ export const translations = {
   fr: {
     role: "Photographe · Vidéaste",
     city: "Montréal",
+
+    seo: {
+      siteTitle: "CHADOW — Photographe événementiel & musical à Montréal",
+      titleSuffix: "CHADOW · Montréal",
+      description:
+        "CHADOW — photographe événementiel & musical à Montréal. Concerts, nightlife, portraits et événements de marque, capturés avec une énergie brute et authentique. Réservez Ambre Bangoura.",
+    },
 
     nav: {
       home: "Accueil",
