@@ -1,0 +1,160 @@
+---
+import { getLang, getT, localePath } from "../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+const lp = (p: string) => localePath(lang, p);
+const f = t.contact.form;
+---
+<form
+  class="contact-form"
+  name="contact"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  action={`${lp("/contact")}?success=1`}
+>
+  <input type="hidden" name="form-name" value="contact" />
+  <p class="visually-hidden" aria-hidden="true">
+    <label>Don't fill this out: <input name="bot-field" /></label>
+  </p>
+
+  <div class="contact-form__row">
+    <div class="contact-form__field">
+      <label for="name">{f.name}</label>
+      <input id="name" name="name" type="text" required autocomplete="name" placeholder={f.namePlaceholder} />
+    </div>
+    <div class="contact-form__field">
+      <label for="email">{f.email}</label>
+      <input id="email" name="email" type="email" required autocomplete="email" placeholder={f.emailPlaceholder} />
+    </div>
+  </div>
+
+  <div class="contact-form__row">
+    <div class="contact-form__field">
+      <label for="event-type">{f.eventType}</label>
+      <select id="event-type" name="event-type" required>
+        <option value="" disabled selected>{f.eventTypePlaceholder}</option>
+        <option value="concert">{f.eventTypes.concert}</option>
+        <option value="nightlife">{f.eventTypes.nightlife}</option>
+        <option value="brand">{f.eventTypes.brand}</option>
+        <option value="corporate">{f.eventTypes.corporate}</option>
+        <option value="private">{f.eventTypes.private}</option>
+        <option value="other">{f.eventTypes.other}</option>
+      </select>
+    </div>
+    <div class="contact-form__field">
+      <label for="event-date">{f.date}</label>
+      <input id="event-date" name="event-date" type="date" />
+    </div>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="message">{f.message}</label>
+    <textarea id="message" name="message" rows="5" placeholder={f.messagePlaceholder} required></textarea>
+  </div>
+
+  <button type="submit" class="contact-form__submit">
+    <span>{t.cta.sendMessage}</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="4" y1="12" x2="20" y2="12"/>
+      <polyline points="14 6 20 12 14 18"/>
+    </svg>
+  </button>
+</form>
+
+<style>
+  .contact-form { display: flex; flex-direction: column; gap: 22px; }
+  .contact-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .contact-form__field { display: flex; flex-direction: column; gap: 8px; }
+  .contact-form__field label {
+    font-size: 10px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+  }
+  .contact-form__field input,
+  .contact-form__field select,
+  .contact-form__field textarea {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.5;
+    transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+  }
+  .contact-form__field input::placeholder,
+  .contact-form__field textarea::placeholder { color: var(--color-text-mute); }
+  .contact-form__field input:focus,
+  .contact-form__field select:focus,
+  .contact-form__field textarea:focus {
+    outline: none;
+    border-color: var(--color-text);
+    background: var(--color-bg-soft);
+  }
+  .contact-form__field textarea { resize: vertical; min-height: 120px; }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) opacity(0.6);
+    cursor: pointer;
+  }
+  .contact-form__field select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' opacity='0.6'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 42px;
+  }
+
+  .contact-form__submit {
+    margin-top: 8px;
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 28px;
+    border-radius: var(--radius-xs);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.9);
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+  }
+  .contact-form__submit svg { transition: transform var(--dur) var(--ease); }
+  .contact-form__submit:hover { background: #fff; color: #000; }
+  .contact-form__submit:hover svg { transform: translateX(4px); }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 760px) {
+    .contact-form__row { grid-template-columns: 1fr; gap: 18px; }
+    .contact-form__field label { font-size: 12px; letter-spacing: 0.28em; }
+    .contact-form__field input,
+    .contact-form__field select,
+    .contact-form__field textarea {
+      padding: 16px 18px;
+      font-size: 16px; /* prevents iOS auto-zoom on focus */
+    }
+    .contact-form__field textarea { min-height: 140px; }
+    .contact-form__submit {
+      padding: 18px 28px;
+      font-size: 13px;
+      letter-spacing: 0.22em;
+    }
+  }
+</style>

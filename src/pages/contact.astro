@@ -1,0 +1,149 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Section from "../components/Section.astro";
+import ContactForm from "../components/ContactForm.astro";
+import { site, featuredImages } from "../data/site";
+import { getLang, getT } from "../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+
+const success = Astro.url.searchParams.get("success") === "1";
+---
+<BaseLayout title={`${t.nav.contact} — CHADOW`}>
+  <Section noBorder>
+    <div class="contact">
+      <div class="contact__intro">
+        <p class="eyebrow">{t.contact.eyebrow}</p>
+        <h1 class="contact__title">
+          {t.contact.title.map((line, i) => <>{i > 0 && <br />}{line}</>)}
+        </h1>
+        <p class="contact__lead">{t.contact.lead}</p>
+
+        <ul class="contact__direct">
+          <li>
+            <span class="contact__label">{t.contact.directLabels.email}</span>
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </li>
+          <li>
+            <span class="contact__label">{t.contact.directLabels.instagram}</span>
+            <a href={site.instagram} target="_blank" rel="noopener">{site.instagramHandle}</a>
+          </li>
+          <li>
+            <span class="contact__label">{t.contact.directLabels.basedIn}</span>
+            <span>{t.contact.basedInValue}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact__panel">
+        <div class="contact__form-wrap">
+          {success && (
+            <div class="contact__success" role="status">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>{t.contact.successMessage}</span>
+            </div>
+          )}
+          <ContactForm />
+        </div>
+
+        <figure class="contact__media">
+          <img src={featuredImages.contact} alt="Ambre at work — shooting from the crowd" loading="lazy" />
+        </figure>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(36px, 6vw, 88px);
+    padding: 24px 0 16px;
+    align-items: start;
+  }
+  .contact__intro { display: flex; flex-direction: column; gap: 24px; max-width: 460px; position: sticky; top: 36px; }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    margin: 0;
+  }
+  .contact__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-display);
+    line-height: 0.9;
+    letter-spacing: 0.005em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .contact__lead { margin: 0; font-size: 15px; color: var(--color-text-dim); line-height: 1.7; max-width: 42ch; }
+
+  .contact__direct {
+    display: flex; flex-direction: column; gap: 18px;
+    padding: 22px 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .contact__direct li { display: flex; flex-direction: column; gap: 4px; }
+  .contact__label {
+    font-size: 10px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+  }
+  .contact__direct a, .contact__direct span:last-child { font-size: 14px; color: var(--color-text); }
+  .contact__direct a:hover { opacity: 0.7; }
+
+  .contact__panel { display: flex; flex-direction: column; gap: 28px; }
+  .contact__form-wrap {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: clamp(24px, 3vw, 36px);
+  }
+
+  .contact__success {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    border-radius: var(--radius-sm);
+    background: rgba(110, 220, 140, 0.08);
+    border: 1px solid rgba(110, 220, 140, 0.3);
+    font-size: 13px;
+    color: rgba(190, 240, 200, 0.95);
+  }
+  .contact__success svg { color: rgb(140, 230, 160); flex-shrink: 0; }
+
+  .contact__media {
+    margin: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    aspect-ratio: 3 / 2;
+    background: #0e0e0e;
+  }
+  .contact__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    .contact { grid-template-columns: 1fr; gap: 32px; }
+    .contact__intro { position: static; max-width: 100%; }
+  }
+  @media (max-width: 760px) {
+    .contact { padding: 8px 0 4px; }
+    .contact__title { font-size: clamp(64px, 18vw, 96px); }
+    .contact__lead { font-size: 17px; line-height: 1.7; }
+    .contact .eyebrow { font-size: 13px; letter-spacing: 0.28em; }
+    .contact__label { font-size: 12px; }
+    .contact__direct a, .contact__direct span:last-child { font-size: 16px; }
+    .contact__form-wrap { padding: 24px 20px 28px; }
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+interface Props {
+  id?: string;
+  label?: string;
+  title?: string;
+  size?: "sm" | "md" | "lg";
+  noBorder?: boolean;
+}
+const { id, label, title, size = "md", noBorder = false } = Astro.props;
+---
+<section
+  id={id}
+  class:list={["section", `section--${size}`, { "section--no-border": noBorder }]}
+>
+  {(label || title) && (
+    <header class="section__head">
+      {label && <p class="section__label" data-reveal>{label}</p>}
+      {title && <h2 class="section__title" data-reveal data-reveal-delay="80">{title}</h2>}
+    </header>
+  )}
+  <div data-reveal data-reveal-delay="160">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section { padding: clamp(48px, 7vw, 96px) 0; border-top: 1px solid var(--color-border); }
+  .section--no-border { border-top: 0; }
+  .section--sm { padding: clamp(32px, 5vw, 56px) 0; }
+  .section--lg { padding: clamp(72px, 9vw, 128px) 0; }
+
+  .section__head { margin-bottom: 36px; }
+  .section__label {
+    font-size: 11px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    margin: 0 0 14px;
+  }
+  .section__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    line-height: 0.95;
+    letter-spacing: 0.005em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 760px) {
+    .section__head { margin-bottom: 28px; }
+    .section__label { font-size: 12px; letter-spacing: 0.28em; margin-bottom: 12px; }
+    .section__title { font-size: clamp(40px, 11vw, 56px); }
+  }
+</style>

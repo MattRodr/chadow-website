@@ -1,0 +1,224 @@
+---
+import { portfolioCategories, portfolioItems } from "../data/site";
+import { getLang, getT } from "../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+---
+<div class="portfolio">
+  <div class="portfolio__filters" role="tablist" aria-label="Portfolio categories">
+    {portfolioCategories.map((slug, i) => (
+      <button
+        type="button"
+        role="tab"
+        class:list={["portfolio__filter", { "is-active": i === 0 }]}
+        data-filter={slug}
+        aria-selected={i === 0 ? "true" : "false"}
+      >
+        {t.work.categories[slug]}
+      </button>
+    ))}
+  </div>
+
+  <p
+    class="portfolio__lead"
+    id="portfolio-lead"
+    data-leads={JSON.stringify(t.work.categoryLeads)}
+  >
+    {t.work.categoryLeads.all}
+  </p>
+
+  <ul class="portfolio__grid" id="portfolio-grid">
+    {portfolioItems.map((item, i) => (
+      <li class="portfolio__item" data-category={item.category} data-reveal="up" data-reveal-delay={Math.min(i * 60, 480)}>
+        <figure
+          class="portfolio__figure"
+          data-lightbox-trigger
+          data-lightbox-group="portfolio"
+          data-lightbox-caption={`${item.title} — ${item.context}`}
+        >
+          <img src={item.src} alt={item.title} loading="lazy" class="portfolio__img" />
+          <figcaption class="portfolio__caption">
+            <span class="portfolio__title">{item.title}</span>
+            <span class="portfolio__context">{item.context}</span>
+          </figcaption>
+        </figure>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<script>
+  function setupPortfolio() {
+    const filters = document.querySelectorAll<HTMLButtonElement>(".portfolio__filter");
+    const items = document.querySelectorAll<HTMLLIElement>(".portfolio__item");
+    const leadEl = document.getElementById("portfolio-lead");
+    if (!filters.length) return;
+
+    let leads: Record<string, string> = {};
+    try {
+      leads = JSON.parse(leadEl?.dataset.leads || "{}");
+    } catch {}
+
+    function apply(target: string) {
+      filters.forEach((f) => {
+        const isActive = f.dataset.filter === target;
+        f.classList.toggle("is-active", isActive);
+        f.setAttribute("aria-selected", String(isActive));
+      });
+      items.forEach((item) => {
+        const cat = item.dataset.category;
+        const show = target === "all" || cat === target;
+        (item as HTMLElement).style.display = show ? "" : "none";
+      });
+      if (leadEl && leads[target]) {
+        leadEl.classList.remove("is-shown");
+        // restart fade-in
+        void (leadEl as HTMLElement).offsetWidth;
+        leadEl.textContent = leads[target];
+        leadEl.classList.add("is-shown");
+      }
+    }
+
+    filters.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const tgt = btn.dataset.filter || "all";
+        apply(tgt);
+        const url = new URL(window.location.href);
+        if (tgt === "all") url.searchParams.delete("filter");
+        else url.searchParams.set("filter", tgt);
+        history.replaceState({}, "", url);
+      });
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const initial = params.get("filter");
+    if (initial && Array.from(filters).some((f) => f.dataset.filter === initial)) {
+      apply(initial);
+    } else if (leadEl) {
+      leadEl.classList.add("is-shown");
+    }
+  }
+
+  document.addEventListener("astro:page-load", setupPortfolio);
+  setupPortfolio();
+</script>
+
+<style>
+  .portfolio { display: flex; flex-direction: column; gap: 28px; }
+
+  .portfolio__filters {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .portfolio__filters::-webkit-scrollbar { display: none; }
+  .portfolio__filter {
+    padding: 12px 18px;
+    font-size: 11px;
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    border-radius: 0;
+    border-bottom: 1px solid transparent;
+    margin-bottom: -1px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  }
+  .portfolio__filter:hover { color: var(--color-text); }
+  .portfolio__filter.is-active {
+    color: var(--color-text);
+    border-bottom-color: var(--color-text);
+  }
+
+  .portfolio__lead {
+    margin: 4px 0 0;
+    max-width: 56ch;
+    font-size: 14px;
+    color: var(--color-text-dim);
+    line-height: 1.7;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 450ms var(--ease), transform 450ms var(--ease);
+  }
+  .portfolio__lead.is-shown {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .portfolio__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .portfolio__item { overflow: hidden; }
+
+  .portfolio__figure {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius);
+    aspect-ratio: 4 / 5;
+    background: #0e0e0e;
+  }
+  .portfolio__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--dur-slow) var(--ease);
+  }
+  .portfolio__figure:hover .portfolio__img { transform: scale(1.04); }
+
+  .portfolio__caption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 16px 18px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+  .portfolio__figure:hover .portfolio__caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .portfolio__title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+  .portfolio__context {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--color-text-dim);
+  }
+
+  @media (max-width: 900px) {
+    .portfolio__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  }
+  @media (max-width: 640px) {
+    .portfolio__grid { grid-template-columns: 1fr; gap: 16px; }
+    .portfolio__figure { aspect-ratio: 4 / 5; }
+    .portfolio__caption {
+      opacity: 1;
+      transform: translateY(0);
+      padding: 18px 20px 16px;
+    }
+    .portfolio__title { font-size: 16px; }
+    .portfolio__context { font-size: 12px; letter-spacing: 0.08em; }
+    .portfolio__filter {
+      padding: 14px 18px;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+    }
+  }
+</style>

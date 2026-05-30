@@ -1,0 +1,118 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Button from "../../components/Button.astro";
+import Section from "../../components/Section.astro";
+import DisplayTitle from "../../components/DisplayTitle.astro";
+import HeroGallery from "../../components/HeroGallery.astro";
+import TrustBand from "../../components/TrustBand.astro";
+import KeyNumbers from "../../components/KeyNumbers.astro";
+import RecentWork from "../../components/RecentWork.astro";
+import ServicesPreview from "../../components/ServicesPreview.astro";
+import AboutTeaser from "../../components/AboutTeaser.astro";
+import ApproachBlock from "../../components/ApproachBlock.astro";
+import FinalCTA from "../../components/FinalCTA.astro";
+import { getLang, getT, localePath } from "../../i18n/utils";
+
+const lang = getLang(Astro);
+const t = getT(lang);
+const lp = (p: string) => localePath(lang, p);
+---
+<BaseLayout>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__content">
+      <p class="eyebrow" data-reveal>
+        {t.home.eyebrow.map((line, i) => <>{i > 0 && <br />}{line}</>)}
+      </p>
+      <DisplayTitle as="h1" id="hero-title" lines={[...t.home.title]} />
+      <p class="hero__lead" data-reveal data-reveal-delay="320">
+        {t.home.lead.map((line, i) => <>{i > 0 && <br />}{line}</>)}
+      </p>
+      <div data-reveal data-reveal-delay="420">
+        <Button href={lp("/contact")}>{t.cta.bookEvent}</Button>
+      </div>
+    </div>
+
+    <div class="hero__gallery" data-reveal="zoom" data-reveal-delay="200">
+      <HeroGallery />
+    </div>
+
+    <div class="hero__bottom">
+      <div data-reveal>
+        <TrustBand />
+      </div>
+      <div data-reveal data-reveal-delay="120">
+        <KeyNumbers variant="row" />
+      </div>
+    </div>
+  </section>
+
+  <Section label={t.sections.recentWork.label} title={t.sections.recentWork.title}>
+    <RecentWork />
+  </Section>
+
+  <Section label={t.sections.whatIShoot.label} title={t.sections.whatIShoot.title}>
+    <ServicesPreview />
+  </Section>
+
+  <Section>
+    <AboutTeaser />
+  </Section>
+
+  <Section noBorder>
+    <ApproachBlock />
+  </Section>
+
+  <Section size="lg">
+    <FinalCTA />
+  </Section>
+</BaseLayout>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.95fr) minmax(420px, 1.1fr);
+    grid-template-areas:
+      "content gallery"
+      "bottom  bottom";
+    gap: 40px 56px;
+    align-items: start;
+    min-height: calc(100vh - 96px);
+    padding-bottom: 60px;
+  }
+  .hero__content { grid-area: content; padding-top: 18px; max-width: 560px; }
+  .hero__gallery { grid-area: gallery; }
+  .hero__bottom { grid-area: bottom; margin-top: 8px; display: grid; gap: 28px; }
+
+  .eyebrow {
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+    margin: 0 0 36px;
+    line-height: 1.8;
+  }
+  .hero__lead {
+    font-size: 14px;
+    color: var(--color-text-dim);
+    margin: 0 0 36px;
+    max-width: 42ch;
+    line-height: 1.75;
+  }
+
+  @media (max-width: 1100px) {
+    .hero {
+      grid-template-columns: 1fr;
+      grid-template-areas: "content" "gallery" "bottom";
+      min-height: auto;
+      gap: 32px;
+      padding-bottom: 32px;
+    }
+  }
+  @media (max-width: 760px) {
+    .hero { gap: 28px; padding-bottom: 24px; }
+    .hero__content { padding-top: 4px; }
+    .eyebrow { font-size: 13px; letter-spacing: 0.28em; margin-bottom: 28px; line-height: 1.7; }
+    .hero__lead { font-size: 16px; line-height: 1.7; margin-bottom: 32px; max-width: 38ch; }
+    .hero__bottom { gap: 28px; }
+  }
+</style>

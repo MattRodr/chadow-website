@@ -1,0 +1,82 @@
+---
+import { getLang, getT } from "../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+
+const icons: Record<string, string> = {
+  ticket: `<path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4Z"/><path d="M13 6v2"/><path d="M13 10v2"/><path d="M13 14v2"/>`,
+  camera: `<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3Z"/><circle cx="12" cy="13" r="4"/>`,
+  star: `<polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9 12 2"/>`,
+};
+const iconKeys = ["ticket", "camera", "star"];
+
+interface Props {
+  variant?: "row" | "grid";
+}
+const { variant = "row" } = Astro.props;
+---
+<ul class:list={["key-numbers", `key-numbers--${variant}`]} aria-label="Key numbers">
+  {t.keyNumbers.map((stat, i) => (
+    <li data-reveal data-reveal-delay={i * 120}>
+      <span class="key-numbers__icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[iconKeys[i] ?? "star"]} />
+      </span>
+      <span class="key-numbers__num" data-counter={stat.value}>{stat.value}</span>
+      <span class="key-numbers__lab">{stat.label}</span>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .key-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+  }
+  .key-numbers li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 8px 18px;
+    border-right: 1px solid var(--color-border);
+    gap: 10px;
+  }
+  .key-numbers li:last-child { border-right: 0; }
+
+  .key-numbers__icon {
+    color: var(--color-text-dim);
+    margin-bottom: 6px;
+  }
+  .key-numbers__num {
+    font-family: var(--font-display);
+    font-size: 38px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .key-numbers__lab {
+    font-size: 10px;
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    line-height: 1.4;
+  }
+
+  .key-numbers--row { padding: 26px 0 4px; max-width: 760px; }
+  .key-numbers--row li { padding: 6px 18px; }
+  .key-numbers--row .key-numbers__icon { display: none; }
+  .key-numbers--row li:first-child { align-items: flex-start; text-align: left; padding-left: 0; }
+  .key-numbers--row .key-numbers__num { font-size: 34px; }
+
+  @media (max-width: 760px) {
+    .key-numbers li { padding: 14px 8px; gap: 8px; }
+    .key-numbers__icon svg { width: 22px; height: 22px; }
+    .key-numbers__num { font-size: 36px; }
+    .key-numbers__lab { font-size: 11px; letter-spacing: 0.16em; line-height: 1.35; }
+    .key-numbers--row { padding: 22px 0 6px; }
+    .key-numbers--row li { padding: 6px 10px; }
+    .key-numbers--row li:first-child { padding-left: 0; }
+    .key-numbers--row .key-numbers__num { font-size: 28px; }
+    .key-numbers--row .key-numbers__lab { font-size: 10px; }
+  }
+</style>

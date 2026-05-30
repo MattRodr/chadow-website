@@ -1,0 +1,145 @@
+---
+import Button from "./Button.astro";
+import { getLang, getT, localePath } from "../i18n/utils";
+
+const lang = getLang(Astro);
+const t = getT(lang);
+const lp = (p: string) => localePath(lang, p);
+
+interface Props {
+  index: number;
+  slug: keyof typeof t.services.items;
+  image: string;
+  ctaKey?: keyof typeof t.cta;
+  reversed?: boolean;
+}
+const { index, slug, image, ctaKey = "bookEvent", reversed = false } = Astro.props;
+const item = t.services.items[slug];
+const num = String(index).padStart(2, "0");
+const ctaLabel = t.cta[ctaKey];
+---
+<article class:list={["service-detail", { "is-reversed": reversed }]}>
+  <figure class="service-detail__media">
+    <img src={image} alt={item.title} loading="lazy" />
+  </figure>
+
+  <div class="service-detail__body">
+    <p class="service-detail__num">{num}</p>
+    <h3 class="service-detail__title">{item.title}</h3>
+    <p class="service-detail__lede">{item.description}</p>
+    <p class="service-detail__copy">{item.longDescription}</p>
+
+    <div class="service-detail__meta">
+      <div>
+        <p class="service-detail__label">{t.services.whatsIncluded}</p>
+        <ul class="service-detail__list">
+          {item.deliverables.map((d) => (
+            <li>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>{d}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p class="service-detail__label">{t.services.bestFor}</p>
+        <p class="service-detail__bestfor">{item.bestFor}</p>
+      </div>
+    </div>
+
+    <Button href={lp("/contact")}>{ctaLabel}</Button>
+  </div>
+</article>
+
+<style>
+  .service-detail {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: center;
+    padding: clamp(40px, 7vw, 88px) 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .service-detail.is-reversed { direction: rtl; }
+  .service-detail.is-reversed > * { direction: ltr; }
+
+  .service-detail__media {
+    margin: 0;
+    max-width: 520px;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #0e0e0e;
+  }
+  .service-detail__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .service-detail__body { display: flex; flex-direction: column; gap: 18px; max-width: 580px; }
+
+  .service-detail__num {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--color-text-mute);
+    margin: 0;
+    letter-spacing: 0.04em;
+  }
+  .service-detail__title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 0.95;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+  }
+  .service-detail__lede { margin: 0; font-size: 16px; color: var(--color-text); line-height: 1.5; }
+  .service-detail__copy { margin: 0; font-size: 14px; color: var(--color-text-dim); line-height: 1.75; }
+
+  .service-detail__meta {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 28px;
+    padding: 22px 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .service-detail__label {
+    font-size: 10px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    margin: 0 0 10px;
+  }
+  .service-detail__list { display: flex; flex-direction: column; gap: 8px; }
+  .service-detail__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--color-text-dim);
+    line-height: 1.5;
+  }
+  .service-detail__list svg { color: var(--color-text); margin-top: 4px; flex-shrink: 0; }
+  .service-detail__bestfor { margin: 0; font-size: 13px; color: var(--color-text-dim); line-height: 1.6; }
+
+  @media (max-width: 900px) {
+    .service-detail { grid-template-columns: 1fr; gap: 28px; padding: clamp(32px, 6vw, 56px) 0; }
+    .service-detail.is-reversed { direction: ltr; }
+    .service-detail__media { max-width: 100%; }
+    .service-detail__meta { grid-template-columns: 1fr; gap: 22px; }
+  }
+  @media (max-width: 760px) {
+    .service-detail__num { font-size: 26px; }
+    .service-detail__title { font-size: clamp(40px, 11vw, 56px); }
+    .service-detail__lede { font-size: 17px; line-height: 1.55; }
+    .service-detail__copy { font-size: 16px; line-height: 1.75; }
+    .service-detail__label { font-size: 12px; }
+    .service-detail__list li { font-size: 15px; line-height: 1.6; gap: 12px; }
+    .service-detail__list svg { width: 16px; height: 16px; }
+    .service-detail__bestfor { font-size: 15px; line-height: 1.7; }
+  }
+</style>

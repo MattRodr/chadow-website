@@ -1,0 +1,70 @@
+---
+import { featuredImages } from "../data/site";
+import { getLang, getT } from "../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+---
+<div class="approach">
+  <div class="approach__inner">
+    <p class="approach__eyebrow">{t.approach.label}</p>
+    <h2 class="approach__quote">
+      {t.approach.quote.map((line, i) => (
+        <>{i > 0 && <br />}{line}</>
+      ))}
+    </h2>
+  </div>
+  <img src={featuredImages.approach} alt="" class="approach__bg" loading="lazy" aria-hidden="true" />
+</div>
+
+<style>
+  .approach {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    isolation: isolate;
+    min-height: clamp(360px, 50vh, 560px);
+    display: flex;
+    align-items: center;
+  }
+  .approach__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+  .approach::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.3) 100%);
+    z-index: 0;
+  }
+  .approach__inner { position: relative; z-index: 1; }
+  .approach__inner { padding: clamp(32px, 5vw, 64px); max-width: 720px; }
+  .approach__eyebrow {
+    font-size: 11px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    margin: 0 0 24px;
+  }
+  .approach__quote {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5.5vw, 80px);
+    line-height: 0.95;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+  }
+  @media (max-width: 760px) {
+    .approach { min-height: clamp(420px, 70vh, 560px); border-radius: var(--radius); }
+    .approach__inner { padding: 32px 26px; }
+    .approach__eyebrow { font-size: 13px; letter-spacing: 0.28em; margin-bottom: 20px; }
+    .approach__quote { font-size: clamp(48px, 13vw, 72px); }
+    .approach::after {
+      background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.85) 100%);
+    }
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import { trustedBy } from "../data/site";
+import { getLang, getT } from "../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+---
+<div class="trust" aria-label={t.trust.label}>
+  <p class="trust__label">
+    <span class="trust__line" aria-hidden="true"></span>
+    <span>{t.trust.label}</span>
+    <span class="trust__line" aria-hidden="true"></span>
+  </p>
+
+  <ul class="trust__logos">
+    {trustedBy.map((logo) => (
+      <li class="trust__logo">
+        {logo.italic && logo.accent ? (
+          <span>{logo.name.replace(logo.accent, "")}<strong>{logo.accent}</strong></span>
+        ) : logo.twoLines ? (
+          <span>{logo.name}</span>
+        ) : (
+          <span>{logo.name}</span>
+        )}
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .trust {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 22px 0 4px;
+    width: 100%;
+    max-width: 920px;
+  }
+
+  .trust__label {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 10px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+  }
+  .trust__line {
+    flex: 0 0 28px;
+    height: 1px;
+    background: var(--color-border);
+  }
+  .trust__line:last-child { flex: 1; max-width: 100%; }
+
+  .trust__logos {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(20px, 3vw, 48px);
+    flex-wrap: wrap;
+  }
+
+  .trust__logo span {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.1;
+    transition: color var(--dur) var(--ease), transform var(--dur) var(--ease);
+    white-space: nowrap;
+    cursor: default;
+  }
+  .trust__logo:hover span {
+    color: rgba(255, 255, 255, 0.95);
+    transform: translateY(-1px);
+  }
+
+  /* Per-brand typographic identity (subtle, tasteful) */
+  .trust__logo:nth-child(1) span { font-weight: 800; letter-spacing: 0.02em; }                    /* IGLOOFEST */
+  .trust__logo:nth-child(2) span { font-weight: 700; letter-spacing: 0.06em; }                    /* OSHEAGA */
+  .trust__logo:nth-child(3) span { font-weight: 500; font-style: italic; letter-spacing: 0.02em; } /* CentreBell */
+  .trust__logo:nth-child(3) strong { font-weight: 700; font-style: italic; }
+  .trust__logo:nth-child(4) span { font-weight: 400; letter-spacing: 0.22em; }                    /* MTELUS */
+  .trust__logo:nth-child(5) span { font-weight: 600; letter-spacing: 0.04em; font-size: 13px; }   /* Piknic */
+
+  @media (max-width: 760px) {
+    .trust { gap: 18px; padding-top: 18px; }
+    .trust__label { font-size: 12px; gap: 16px; }
+    .trust__line { flex-basis: 22px; }
+    .trust__logos {
+      justify-content: flex-start;
+      gap: 18px 28px;
+    }
+    .trust__logo span { font-size: 15px; }
+    .trust__logo:nth-child(5) span { font-size: 14px; }
+  }
+</style>

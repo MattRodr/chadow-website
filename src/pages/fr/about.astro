@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Section from "../../components/Section.astro";
+import AboutHeader from "../../components/AboutHeader.astro";
+import ApproachBlock from "../../components/ApproachBlock.astro";
+import KeyNumbers from "../../components/KeyNumbers.astro";
+import InstagramTeaser from "../../components/InstagramTeaser.astro";
+import FinalCTA from "../../components/FinalCTA.astro";
+import { getLang, getT } from "../../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+---
+<BaseLayout title={`${t.nav.about} — CHADOW`}>
+  <Section noBorder>
+    <AboutHeader />
+  </Section>
+
+  <Section noBorder>
+    <ApproachBlock />
+  </Section>
+
+  <Section label={t.sections.keyNumbers.label} title={t.sections.keyNumbers.title}>
+    <KeyNumbers variant="grid" />
+  </Section>
+
+  <InstagramTeaser />
+
+  <Section size="lg">
+    <FinalCTA />
+  </Section>
+</BaseLayout>

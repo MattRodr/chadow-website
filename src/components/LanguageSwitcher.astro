@@ -1,0 +1,38 @@
+---
+import { getLang, switchLocaleHref } from "../i18n/utils";
+const lang = getLang(Astro);
+const otherHref = switchLocaleHref(Astro.url.pathname, lang);
+const otherLabel = lang === "en" ? "FR" : "EN";
+const currentLabel = lang === "en" ? "EN" : "FR";
+---
+<a
+  href={otherHref}
+  class="lang"
+  aria-label={`Switch to ${otherLabel === "FR" ? "French" : "English"}`}
+  data-astro-reload
+>
+  <span class="lang__current">{currentLabel}</span>
+  <span class="lang__sep" aria-hidden="true">/</span>
+  <span class="lang__other">{otherLabel}</span>
+</a>
+
+<style>
+  .lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--color-text-mute);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    width: max-content;
+    transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  }
+  .lang:hover { color: var(--color-text); border-color: var(--color-border-strong); }
+
+  .lang__current { color: var(--color-text); }
+  .lang__sep { color: var(--color-text-mute); opacity: 0.6; }
+</style>

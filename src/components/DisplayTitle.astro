@@ -1,0 +1,25 @@
+---
+interface Props {
+  lines: string[];
+  as?: "h1" | "h2" | "h3";
+  id?: string;
+  class?: string;
+}
+const { lines, as: Tag = "h1", id, class: className = "" } = Astro.props;
+---
+<Tag id={id} class:list={["display", "display-reveal", className]} data-reveal="fade">
+  {lines.map((line) => (
+    <span class="display-reveal__line"><span>{line}</span></span>
+  ))}
+</Tag>
+
+<style>
+  .display {
+    font-family: var(--font-display);
+    font-size: var(--fs-display);
+    line-height: 0.9;
+    letter-spacing: 0.005em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+</style>

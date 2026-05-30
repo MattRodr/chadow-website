@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Section from "../../components/Section.astro";
+import ServiceDetail from "../../components/ServiceDetail.astro";
+import FinalCTA from "../../components/FinalCTA.astro";
+import { services } from "../../data/site";
+import { getLang, getT } from "../../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+---
+<BaseLayout title={`${t.nav.services} — CHADOW`}>
+  <Section noBorder>
+    <header class="services-intro">
+      <p class="eyebrow">{t.nav.services}</p>
+      <h1 class="services-intro__title">
+        {t.services.sectionTitle.map((line, i) => <>{i > 0 && <br />}{line}</>)}
+      </h1>
+      <p class="services-intro__lead">{t.services.sectionLead}</p>
+    </header>
+  </Section>
+
+  {services.map((service, i) => (
+    <ServiceDetail
+      index={i + 1}
+      slug={service.slug}
+      image={service.detailImage}
+      ctaKey={service.ctaKey}
+      reversed={i % 2 === 1}
+    />
+  ))}
+
+  <Section size="lg">
+    <FinalCTA />
+  </Section>
+</BaseLayout>
+
+<style>
+  .services-intro { max-width: 760px; padding: 24px 0 8px; }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    margin: 0 0 24px;
+  }
+  .services-intro__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-display);
+    line-height: 0.9;
+    letter-spacing: 0.005em;
+    margin: 0 0 24px;
+    text-transform: uppercase;
+  }
+  .services-intro__lead { margin: 0; font-size: 16px; color: var(--color-text-dim); line-height: 1.7; max-width: 56ch; }
+  @media (max-width: 760px) {
+    .services-intro { padding: 8px 0 4px; }
+    .services-intro .eyebrow { font-size: 13px; letter-spacing: 0.28em; }
+    .services-intro__title { font-size: clamp(56px, 14vw, 84px); }
+    .services-intro__lead { font-size: 17px; line-height: 1.7; }
+  }
+</style>

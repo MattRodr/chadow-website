@@ -1,0 +1,47 @@
+:root {
+  /* === Colors === */
+  --color-bg:           #000000;
+  --color-bg-elev:      #0a0a0a;
+  --color-bg-card:      #0e0e0e;
+  --color-bg-soft:      #141414;
+  --color-border:       rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+  --color-text:         #ffffff;
+  --color-text-dim:     rgba(255, 255, 255, 0.72);
+  --color-text-mute:    rgba(255, 255, 255, 0.5);
+
+  /* === Typography === */
+  --font-display: "Anton", "Bebas Neue", Impact, sans-serif;
+  --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --fs-eyebrow:  11px;
+  --fs-body:     15px;
+  --fs-small:    13px;
+  --fs-tiny:     11px;
+  --fs-h2:       clamp(36px, 4.5vw, 64px);
+  --fs-display:  clamp(56px, 7.4vw, 112px);
+
+  --ls-wide:     0.24em;
+  --ls-extra:    0.3em;
+
+  /* === Layout === */
+  --sidebar-w:   230px;
+  --gutter:      clamp(20px, 3vw, 48px);
+  --container:   1440px;
+
+  /* === Radius === */
+  --radius-xs:   4px;
+  --radius-sm:   10px;
+  --radius:      14px;
+  --radius-lg:   22px;
+
+  /* === Motion === */
+  --ease:        cubic-bezier(.2, .7, .2, 1);
+  --dur-fast:    .25s;
+  --dur:         .35s;
+  --dur-slow:    .8s;
+
+  /* === Shadows === */
+  --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.4);
+  --shadow-lg:   0 24px 60px rgba(0, 0, 0, 0.5);
+}

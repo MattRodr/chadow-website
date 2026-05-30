@@ -1,0 +1,76 @@
+---
+import Button from "./Button.astro";
+import { site } from "../data/site";
+import { getLang, getT, localePath } from "../i18n/utils";
+
+const lang = getLang(Astro);
+const t = getT(lang);
+const lp = (p: string) => localePath(lang, p);
+---
+<div class="final-cta">
+  <div class="final-cta__main">
+    <h2 class="final-cta__title">{t.finalCta.title}</h2>
+    <p class="final-cta__lead">{t.finalCta.lead}</p>
+    <Button href={lp("/contact")}>{t.cta.bookEvent}</Button>
+  </div>
+
+  <ul class="final-cta__contact">
+    <li>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="5" width="18" height="14" rx="2"/>
+        <path d="m3 7 9 6 9-6"/>
+      </svg>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+    </li>
+    <li>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      <a href={site.instagram} target="_blank" rel="noopener">{site.instagramHandle}</a>
+    </li>
+    <li>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      <span>{t.contact.basedInValue}</span>
+    </li>
+  </ul>
+</div>
+
+<style>
+  .final-cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 80px);
+    align-items: center;
+  }
+  .final-cta__main { display: flex; flex-direction: column; gap: 18px; }
+  .final-cta__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    line-height: 0.95;
+  }
+  .final-cta__lead { margin: 0 0 6px; font-size: 15px; color: var(--color-text-dim); }
+
+  .final-cta__contact { display: flex; flex-direction: column; gap: 16px; }
+  .final-cta__contact li { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--color-text-dim); }
+  .final-cta__contact a { color: var(--color-text); transition: opacity var(--dur-fast) var(--ease); }
+  .final-cta__contact a:hover { opacity: 0.7; }
+  .final-cta__contact svg { color: var(--color-text-mute); flex-shrink: 0; }
+
+  @media (max-width: 900px) {
+    .final-cta { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 760px) {
+    .final-cta__title { font-size: clamp(48px, 13vw, 72px); }
+    .final-cta__lead { font-size: 17px; line-height: 1.7; }
+    .final-cta__contact li { font-size: 16px; }
+    .final-cta__contact svg { width: 20px; height: 20px; }
+  }
+</style>

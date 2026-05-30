@@ -1,0 +1,97 @@
+---
+import { workedWith, featuredImages } from "../data/site";
+import { getLang, getT } from "../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+---
+<div class="about-header">
+  <div class="about-header__content">
+    <p class="eyebrow">{t.about.eyebrow}</p>
+    <h1 class="about-header__title">{t.about.title}</h1>
+
+    <div class="about-header__text">
+      {t.about.paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+
+    <div class="about-header__worked">
+      <p class="eyebrow eyebrow--small">{t.about.workedWithLabel}</p>
+      <p class="about-header__brands">
+        {workedWith.join(" · ")}<br />
+        {t.about.workedWithSuffix}
+      </p>
+    </div>
+  </div>
+
+  <figure class="about-header__media">
+    <img src={featuredImages.aboutPortrait} alt="Ambre Bangoura at work — Montreal" loading="eager" />
+  </figure>
+</div>
+
+<style>
+  .about-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: center;
+    padding: 16px 0 8px;
+  }
+  .about-header__content { display: flex; flex-direction: column; gap: 28px; max-width: 560px; }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    margin: 0;
+  }
+  .eyebrow--small { font-size: 10px; }
+
+  .about-header__title {
+    font-family: var(--font-display);
+    font-size: var(--fs-display);
+    line-height: 0.9;
+    letter-spacing: 0.005em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .about-header__text { display: flex; flex-direction: column; gap: 14px; color: var(--color-text-dim); line-height: 1.7; font-size: 15px; }
+  .about-header__text p { margin: 0; }
+
+  .about-header__worked {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 18px 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .about-header__brands { margin: 0; font-size: 14px; color: var(--color-text-dim); line-height: 1.7; }
+
+  .about-header__media {
+    margin: 0;
+    max-width: 520px;
+    justify-self: end;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #0e0e0e;
+  }
+  .about-header__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    .about-header { grid-template-columns: 1fr; gap: 28px; }
+    .about-header__media { order: -1; max-width: 100%; justify-self: stretch; }
+  }
+  @media (max-width: 760px) {
+    .about-header__title { font-size: clamp(64px, 18vw, 96px); }
+    .about-header .eyebrow { font-size: 13px; letter-spacing: 0.28em; }
+    .about-header__text { font-size: 17px; line-height: 1.75; gap: 16px; }
+    .about-header__brands { font-size: 16px; line-height: 1.7; }
+    .about-header__worked { padding: 22px 0; }
+  }
+</style>

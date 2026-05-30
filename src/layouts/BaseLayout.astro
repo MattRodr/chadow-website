@@ -1,0 +1,70 @@
+---
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import Sidebar from "../components/Sidebar.astro";
+import Topbar from "../components/Topbar.astro";
+import Footer from "../components/Footer.astro";
+import Lightbox from "../components/Lightbox.astro";
+import { site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+const {
+  title = `${site.name} — ${site.role} based in ${site.city}`,
+  description = site.description,
+  noindex = false,
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={site.url} />
+
+  <ClientRouter />
+  <script>
+    import "../scripts/reveal.ts";
+    import "../scripts/counter.ts";
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <Sidebar />
+  <Topbar />
+
+  <main id="main" class="app-main">
+    <slot />
+    <Footer />
+  </main>
+
+  <Lightbox />
+
+  <style>
+    .app-main {
+      margin-left: var(--sidebar-w);
+      padding: 36px var(--gutter) 60px;
+      min-height: 100vh;
+    }
+    @media (max-width: 760px) {
+      .app-main { margin-left: 0; padding: 22px 18px 40px; }
+    }
+  </style>
+</body>
+</html>

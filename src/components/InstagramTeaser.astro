@@ -1,0 +1,207 @@
+---
+import { site, homePhotos } from "../data/site";
+import { getLang, getT } from "../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+
+// Pick 4 strong frames for the mosaic (re-use existing assets)
+const previews = [
+  homePhotos[0], // Choses Sauvages — red crowd
+  homePhotos[3], // Elderbrook — B&W
+  homePhotos[1], // Hologramme — orange
+  homePhotos[2], // Fakear — green
+];
+---
+<section class="ig" aria-labelledby="ig-title">
+  <div class="ig__inner">
+    <div class="ig__copy">
+      <p class="ig__eyebrow" data-reveal>{t.instagram.eyebrow}</p>
+      <h2 class="ig__title" id="ig-title" data-reveal data-reveal-delay="80">
+        {t.instagram.title}
+      </h2>
+      <p class="ig__lead" data-reveal data-reveal-delay="160">{t.instagram.lead}</p>
+
+      <a href={site.instagram} target="_blank" rel="noopener" class="ig__cta" data-reveal data-reveal-delay="240">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        <span class="ig__cta-text">
+          <span class="ig__handle-line">{t.instagram.handleLine}</span>
+          <span class="ig__handle">{site.instagramHandle}</span>
+        </span>
+        <svg class="ig__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="7" y1="17" x2="17" y2="7"/>
+          <polyline points="7 7 17 7 17 17"/>
+        </svg>
+      </a>
+    </div>
+
+    <a href={site.instagram} target="_blank" rel="noopener" class="ig__mosaic" aria-label={t.instagram.cta} data-reveal="zoom" data-reveal-delay="160">
+      {previews.map((p, i) => (
+        <figure class="ig__tile" style={`--idx: ${i}`}>
+          <img src={p.src} alt={p.alt} loading="lazy" />
+        </figure>
+      ))}
+      <span class="ig__overlay" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        <span>{t.instagram.cta}</span>
+      </span>
+    </a>
+  </div>
+</section>
+
+<style>
+  .ig {
+    border-top: 1px solid var(--color-border);
+    padding: clamp(56px, 8vw, 104px) 0 clamp(40px, 6vw, 64px);
+  }
+  .ig__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(28px, 5vw, 80px);
+    align-items: center;
+  }
+
+  .ig__copy { display: flex; flex-direction: column; gap: 18px; max-width: 480px; }
+  .ig__eyebrow {
+    font-size: 11px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    margin: 0;
+  }
+  .ig__title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.6vw, 60px);
+    line-height: 0.95;
+    letter-spacing: 0.005em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .ig__lead {
+    margin: 0;
+    font-size: 15px;
+    color: var(--color-text-dim);
+    line-height: 1.7;
+    max-width: 44ch;
+  }
+
+  .ig__cta {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    width: max-content;
+    color: var(--color-text);
+    transition:
+      background var(--dur-fast) var(--ease),
+      border-color var(--dur-fast) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+  .ig__cta:hover {
+    background: var(--color-bg-soft);
+    border-color: var(--color-border-strong);
+    transform: translateY(-1px);
+  }
+  .ig__cta-text { display: flex; flex-direction: column; line-height: 1.15; }
+  .ig__handle-line {
+    font-size: 9px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+  }
+  .ig__handle {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .ig__arrow {
+    color: var(--color-text-mute);
+    transition: transform var(--dur) var(--ease), color var(--dur-fast) var(--ease);
+  }
+  .ig__cta:hover .ig__arrow { transform: translate(2px, -2px); color: var(--color-text); }
+
+  /* Mosaic */
+  .ig__mosaic {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .ig__tile {
+    margin: 0;
+    overflow: hidden;
+    background: #0e0e0e;
+  }
+  .ig__tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1200ms cubic-bezier(.2,.7,.2,1), filter var(--dur) var(--ease);
+    filter: grayscale(0%) brightness(1);
+  }
+  .ig__mosaic:hover .ig__tile img {
+    transform: scale(1.04);
+    filter: brightness(0.7);
+  }
+
+  .ig__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--color-text);
+    background: rgba(0, 0, 0, 0.0);
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease), background var(--dur) var(--ease);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-wide);
+    font-size: 11px;
+    pointer-events: none;
+  }
+  .ig__mosaic:hover .ig__overlay {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.45);
+  }
+
+  @media (max-width: 900px) {
+    .ig__inner { grid-template-columns: 1fr; gap: 32px; }
+    .ig__title { font-size: clamp(40px, 11vw, 56px); }
+    .ig__overlay {
+      opacity: 1;
+      background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 60%);
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 18px 20px;
+      flex-direction: row;
+      font-size: 13px;
+    }
+    .ig__overlay svg { display: none; }
+  }
+  @media (max-width: 760px) {
+    .ig__lead { font-size: 17px; line-height: 1.7; }
+    .ig__cta { padding: 16px 22px; }
+    .ig__handle-line { font-size: 11px; }
+    .ig__handle { font-size: 16px; }
+    .ig__eyebrow { font-size: 13px; letter-spacing: 0.28em; }
+  }
+</style>

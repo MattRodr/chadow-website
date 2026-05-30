@@ -1,0 +1,54 @@
+---
+import { site } from "../data/site";
+import { getLang, getT, localePath } from "../i18n/utils";
+
+const lang = getLang(Astro);
+const t = getT(lang);
+const lp = (p: string) => localePath(lang, p);
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="footer__inner">
+    <p class="footer__copy">© {year} {site.name} — {t.footer.rights}</p>
+    <ul class="footer__legal">
+      <li><a href={lp("/privacy")}>{t.footer.privacy}</a></li>
+      <li><a href={lp("/terms")}>{t.footer.terms}</a></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding: 28px 0;
+    margin-top: 24px;
+  }
+  .footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer__copy {
+    margin: 0;
+    font-size: 12px;
+    color: var(--color-text-mute);
+    letter-spacing: 0.04em;
+  }
+  .footer__legal { display: flex; gap: 28px; }
+  .footer__legal a {
+    font-size: 12px;
+    color: var(--color-text-mute);
+    transition: color var(--dur-fast) var(--ease);
+  }
+  .footer__legal a:hover { color: var(--color-text); }
+
+  @media (max-width: 760px) {
+    .footer { padding: 32px 0; }
+    .footer__inner { gap: 18px; }
+    .footer__copy { font-size: 13px; }
+    .footer__legal { gap: 22px; }
+    .footer__legal a { font-size: 13px; }
+  }
+</style>

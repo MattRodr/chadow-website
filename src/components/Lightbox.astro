@@ -1,0 +1,295 @@
+---
+// Global lightbox: any <img> wrapped in an element with data-lightbox-trigger
+// will open in a smooth fullscreen overlay. Supports keyboard nav, swipe, and
+// re-binds on Astro page navigation.
+---
+<div
+  id="lightbox"
+  class="lightbox"
+  aria-hidden="true"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Image preview"
+>
+  <button class="lightbox__close" aria-label="Close image">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+      <line x1="6" y1="6" x2="18" y2="18"/>
+      <line x1="18" y1="6" x2="6" y2="18"/>
+    </svg>
+  </button>
+
+  <button class="lightbox__nav lightbox__nav--prev" aria-label="Previous image">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 6 9 12 15 18"/>
+    </svg>
+  </button>
+  <button class="lightbox__nav lightbox__nav--next" aria-label="Next image">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 6 15 12 9 18"/>
+    </svg>
+  </button>
+
+  <figure class="lightbox__figure">
+    <img class="lightbox__img" alt="" />
+    <figcaption class="lightbox__caption" aria-live="polite"></figcaption>
+  </figure>
+
+  <div class="lightbox__counter" aria-live="polite"></div>
+</div>
+
+<script>
+  type Item = { src: string; alt: string; caption: string };
+
+  function setup() {
+    const lb = document.getElementById("lightbox");
+    if (!lb || lb.dataset.bound === "1") return;
+    lb.dataset.bound = "1";
+
+    const imgEl = lb.querySelector<HTMLImageElement>(".lightbox__img")!;
+    const captionEl = lb.querySelector<HTMLElement>(".lightbox__caption")!;
+    const counterEl = lb.querySelector<HTMLElement>(".lightbox__counter")!;
+    const closeBtn = lb.querySelector<HTMLButtonElement>(".lightbox__close")!;
+    const prevBtn = lb.querySelector<HTMLButtonElement>(".lightbox__nav--prev")!;
+    const nextBtn = lb.querySelector<HTMLButtonElement>(".lightbox__nav--next")!;
+    const figure = lb.querySelector<HTMLElement>(".lightbox__figure")!;
+
+    let group: Item[] = [];
+    let index = 0;
+
+    function render() {
+      const item = group[index];
+      if (!item) return;
+      imgEl.src = item.src;
+      imgEl.alt = item.alt;
+      captionEl.textContent = item.caption || "";
+      counterEl.textContent = group.length > 1 ? `${index + 1} / ${group.length}` : "";
+      const showNav = group.length > 1;
+      prevBtn.style.display = showNav ? "" : "none";
+      nextBtn.style.display = showNav ? "" : "none";
+    }
+
+    function open(items: Item[], startIndex: number) {
+      group = items;
+      index = startIndex;
+      render();
+      lb.setAttribute("aria-hidden", "false");
+      lb.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+    }
+    function close() {
+      lb.classList.remove("is-open");
+      lb.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      // clear src after close to free memory
+      setTimeout(() => { if (!lb.classList.contains("is-open")) imgEl.src = ""; }, 350);
+    }
+    function next() {
+      if (group.length < 2) return;
+      index = (index + 1) % group.length;
+      figure.classList.remove("flick");
+      void figure.offsetWidth;
+      figure.classList.add("flick");
+      render();
+    }
+    function prev() {
+      if (group.length < 2) return;
+      index = (index - 1 + group.length) % group.length;
+      figure.classList.remove("flick");
+      void figure.offsetWidth;
+      figure.classList.add("flick");
+      render();
+    }
+
+    // Click on triggers
+    document.addEventListener("click", (e) => {
+      const trigger = (e.target as HTMLElement).closest<HTMLElement>("[data-lightbox-trigger]");
+      if (!trigger) return;
+      e.preventDefault();
+      const groupName = trigger.dataset.lightboxGroup || "default";
+      const triggers = Array.from(
+        document.querySelectorAll<HTMLElement>(`[data-lightbox-trigger][data-lightbox-group="${groupName}"]`)
+      );
+      const items: Item[] = triggers.map((el) => {
+        const img = el.querySelector("img");
+        const src = el.dataset.lightboxSrc || img?.getAttribute("src") || "";
+        const alt = el.dataset.lightboxAlt || img?.getAttribute("alt") || "";
+        const caption = el.dataset.lightboxCaption || el.querySelector("figcaption")?.textContent?.trim() || "";
+        return { src, alt, caption };
+      });
+      const startIndex = triggers.indexOf(trigger);
+      open(items, startIndex);
+    });
+
+    closeBtn.addEventListener("click", close);
+    prevBtn.addEventListener("click", prev);
+    nextBtn.addEventListener("click", next);
+
+    // Backdrop click closes
+    lb.addEventListener("click", (e) => {
+      if (e.target === lb) close();
+    });
+
+    // Keyboard
+    document.addEventListener("keydown", (e) => {
+      if (!lb.classList.contains("is-open")) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") next();
+      else if (e.key === "ArrowLeft") prev();
+    });
+
+    // Swipe (basic)
+    let startX = 0;
+    let isDown = false;
+    figure.addEventListener("touchstart", (e) => {
+      isDown = true;
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+    figure.addEventListener("touchend", (e) => {
+      if (!isDown) return;
+      isDown = false;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50) {
+        if (dx < 0) next();
+        else prev();
+      }
+    });
+  }
+
+  document.addEventListener("astro:page-load", setup);
+  setup();
+</script>
+
+<style>
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 320ms cubic-bezier(.2,.7,.2,1), visibility 0s linear 320ms;
+    padding: 80px 64px;
+  }
+  .lightbox.is-open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 320ms cubic-bezier(.2,.7,.2,1);
+  }
+
+  .lightbox__figure {
+    margin: 0;
+    width: 100%;
+    max-width: 1400px;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    transform: scale(0.96);
+    opacity: 0;
+    transition: transform 480ms cubic-bezier(.2,.7,.2,1), opacity 380ms cubic-bezier(.2,.7,.2,1);
+  }
+  .lightbox.is-open .lightbox__figure {
+    transform: scale(1);
+    opacity: 1;
+  }
+  .lightbox__figure.flick {
+    animation: lb-flick 320ms cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes lb-flick {
+    0%   { opacity: 0.4; transform: scale(0.985); }
+    100% { opacity: 1;   transform: scale(1); }
+  }
+
+  .lightbox__img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100vh - 200px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    user-select: none;
+  }
+  .lightbox__caption {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+    text-align: center;
+    max-width: 80ch;
+  }
+
+  .lightbox__close {
+    position: absolute;
+    top: 22px; right: 24px;
+    width: 44px; height: 44px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-border);
+    transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+    z-index: 2;
+  }
+  .lightbox__close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-border-strong);
+  }
+
+  .lightbox__nav {
+    position: absolute;
+    top: 50%;
+    width: 52px; height: 52px;
+    transform: translateY(-50%);
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-border);
+    transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+    z-index: 2;
+  }
+  .lightbox__nav:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-border-strong);
+  }
+  .lightbox__nav--prev { left: 22px; }
+  .lightbox__nav--next { right: 22px; }
+
+  .lightbox__counter {
+    position: absolute;
+    bottom: 22px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    letter-spacing: var(--ls-wide);
+    color: var(--color-text-mute);
+  }
+
+  /* Visually mark images that can be opened */
+  :global([data-lightbox-trigger]) { cursor: zoom-in; }
+
+  @media (max-width: 760px) {
+    .lightbox { padding: 64px 12px; }
+    .lightbox__close { top: 14px; right: 14px; width: 38px; height: 38px; }
+    .lightbox__nav { width: 40px; height: 40px; }
+    .lightbox__nav--prev { left: 8px; }
+    .lightbox__nav--next { right: 8px; }
+    .lightbox__img { max-height: calc(100vh - 160px); }
+    .lightbox__caption { font-size: 11px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox, .lightbox__figure, .lightbox__figure.flick {
+      transition: opacity 0.01ms !important;
+      transform: none !important;
+      animation: none !important;
+    }
+  }
+</style>
