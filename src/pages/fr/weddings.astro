@@ -1,0 +1,12 @@
+---
+import PortfolioLayout from "../../layouts/PortfolioLayout.astro";
+import NichePortfolio from "../../components/NichePortfolio.astro";
+import { portfolios } from "../../data/portfolios";
+import { getLang } from "../../i18n/utils";
+
+const lang = getLang(Astro);
+const c = portfolios.weddings[lang];
+---
+<PortfolioLayout title={c.title} description={c.intro[0]}>
+  <NichePortfolio slug="weddings" />
+</PortfolioLayout>

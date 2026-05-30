@@ -1,0 +1,175 @@
+---
+import Button from "./Button.astro";
+import { portfolios } from "../data/portfolios";
+import { getLang, localePath } from "../i18n/utils";
+
+interface Props {
+  slug: keyof typeof portfolios;
+}
+const { slug } = Astro.props;
+
+const lang = getLang(Astro);
+const lp = (p: string) => localePath(lang, p);
+const page = portfolios[slug];
+const c = page[lang];
+---
+<article class="niche">
+  <!-- HEADER -->
+  <header class="niche__head">
+    <p class="niche__eyebrow" data-reveal>{c.eyebrow}</p>
+    <h1 class="niche__title" data-reveal data-reveal-delay="80">{c.title}</h1>
+    <div class="niche__intro" data-reveal data-reveal-delay="160">
+      {c.intro.map((p) => <p>{p}</p>)}
+    </div>
+  </header>
+
+  <!-- GALLERY -->
+  <section class="niche__gallery" aria-label="Gallery">
+    {page.gallery.map((photo, i) => (
+      <figure
+        class="niche__tile"
+        data-reveal="up"
+        data-reveal-delay={Math.min(i * 70, 420)}
+        data-lightbox-trigger
+        data-lightbox-group={`niche-${slug}`}
+        data-lightbox-caption={c.title}
+      >
+        <img src={photo.src} alt={photo.alt} loading={i < 2 ? "eager" : "lazy"} />
+      </figure>
+    ))}
+  </section>
+
+  <!-- SERVICE INFO -->
+  <section class="niche__service">
+    <div class="niche__service-text" data-reveal>
+      <p class="niche__service-label">{c.serviceLabel}</p>
+      <h2 class="niche__service-title">{c.serviceTitle}</h2>
+      <p class="niche__service-copy">{c.serviceCopy}</p>
+    </div>
+    <div class="niche__includes" data-reveal data-reveal-delay="120">
+      <p class="niche__service-label">{c.includesLabel}</p>
+      <ul>
+        {c.includes.map((item) => (
+          <li>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="niche__cta" data-reveal>
+    <h2 class="niche__cta-title">{c.ctaLabel}</h2>
+    <p class="niche__cta-note">{c.ctaNote}</p>
+    <Button href={lp("/contact")}>{c.ctaLabel}</Button>
+  </section>
+</article>
+
+<style>
+  .niche { display: flex; flex-direction: column; gap: clamp(56px, 8vw, 104px); }
+
+  /* HEADER */
+  .niche__head { max-width: 720px; }
+  .niche__eyebrow {
+    font-size: 11px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    margin: 0 0 22px;
+  }
+  .niche__title {
+    font-family: var(--font-display);
+    font-size: clamp(64px, 11vw, 132px);
+    line-height: 0.88;
+    letter-spacing: 0.005em;
+    margin: 0 0 28px;
+    text-transform: uppercase;
+  }
+  .niche__intro { display: flex; flex-direction: column; gap: 16px; }
+  .niche__intro p {
+    margin: 0;
+    font-size: clamp(15px, 1.4vw, 17px);
+    line-height: 1.75;
+    color: var(--color-text-dim);
+  }
+  .niche__intro p:first-child { color: var(--color-text); font-size: clamp(17px, 1.6vw, 20px); line-height: 1.6; }
+
+  /* GALLERY */
+  .niche__gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .niche__tile {
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius);
+    aspect-ratio: 4 / 5;
+    background: #0e0e0e;
+  }
+  .niche__tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--dur-slow) var(--ease);
+  }
+  .niche__tile:hover img { transform: scale(1.04); }
+
+  /* SERVICE */
+  .niche__service {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(28px, 5vw, 72px);
+    padding: clamp(32px, 5vw, 56px) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .niche__service-label {
+    font-size: 10px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    margin: 0 0 14px;
+  }
+  .niche__service-title {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.5vw, 46px);
+    line-height: 0.98;
+    margin: 0 0 18px;
+    text-transform: uppercase;
+  }
+  .niche__service-copy { margin: 0; font-size: 15px; line-height: 1.75; color: var(--color-text-dim); }
+
+  .niche__includes ul { display: flex; flex-direction: column; gap: 12px; }
+  .niche__includes li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--color-text-dim);
+    line-height: 1.5;
+  }
+  .niche__includes svg { color: var(--color-text); margin-top: 3px; flex-shrink: 0; }
+
+  /* CTA */
+  .niche__cta { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .niche__cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 0.95;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .niche__cta-note { margin: 0 0 8px; font-size: 15px; color: var(--color-text-dim); }
+
+  @media (max-width: 760px) {
+    .niche__gallery { grid-template-columns: 1fr; gap: 16px; }
+    .niche__service { grid-template-columns: 1fr; }
+    .niche__intro p:first-child { font-size: 18px; }
+  }
+</style>
