@@ -14,8 +14,8 @@ export const site = {
   name: "CHADOW",
   owner: "Ambre Bangoura",
   email: "contact@chadow.photo",
-  instagram: "https://instagram.com/cha.dow",
-  instagramHandle: "@cha.dow",
+  instagram: "https://www.instagram.com/chadow.photo/",
+  instagramHandle: "@chadow.photo",
   url: "https://chadow.photo",
   description: "Event & Music Photographer based in Montréal.",
 };
