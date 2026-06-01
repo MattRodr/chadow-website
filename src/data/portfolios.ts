@@ -21,6 +21,7 @@
  */
 
 import type { Photo } from "./photos";
+import weddingsData from "./cms/weddings.json";
 
 /** Slugs des pages cachées — utilisés pour les exclure du sitemap. */
 export const hiddenSlugs = ["weddings"];
@@ -94,15 +95,7 @@ export const portfolios: Record<string, NichePage> = {
       ctaLabel: "Réserver votre mariage",
       ctaNote: "Indiquez-moi votre date et le lieu — je réponds sous 24 h.",
     },
-    // TEMP : photos d'exemple. Remplace par de vraies photos de mariage
-    // (dépose-les dans public/images/weddings/ et mets à jour les chemins).
-    gallery: [
-      { src: "/images/home/choses-sauvages-club-soda-2025.jpg", alt: "Moment" },
-      { src: "/images/work/super-plage-francos-2025.jpg",       alt: "Moment" },
-      { src: "/images/home/elderbrook-mtelus-2025.jpg",         alt: "Moment" },
-      { src: "/images/work/backwash-sat-2025.jpg",              alt: "Moment" },
-      { src: "/images/home/fakear-fairmount-2024.jpg",          alt: "Moment" },
-      { src: "/images/home/cirque-luzia-2025.jpg",              alt: "Moment" },
-    ],
+    // Galerie éditable via /admin → src/data/cms/weddings.json
+    gallery: weddingsData.gallery,
   },
 };

@@ -1,0 +1,18 @@
+{
+  "live-nightlife-coverage": {
+    "card": "/images/home/hologramme-sat-2025.jpg",
+    "detail": "/images/home/choses-sauvages-club-soda-2025.jpg"
+  },
+  "portraits-editorial": {
+    "card": "/images/home/elderbrook-mtelus-2025.jpg",
+    "detail": "/images/work/super-plage-francos-2025.jpg"
+  },
+  "event-coverage": {
+    "card": "/images/work/kazy-lambist-club-soda-2025.jpg",
+    "detail": "/images/home/cirque-luzia-2025.jpg"
+  },
+  "video-content": {
+    "card": "/images/home/fakear-fairmount-2024.jpg",
+    "detail": "/images/work/backwash-sat-2025.jpg"
+  }
+}
