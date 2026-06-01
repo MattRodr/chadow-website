@@ -1,8 +1,8 @@
 #  ============================================================
 #  CHADOW — Configuration de l'interface d'admin (Sveltia CMS)
 #  ============================================================
-#  Chaque "collection" ci-dessous = une section éditable du site.
-#  Les photos importées sont enregistrées dans public/images/uploads/.
+#  Organisation : par PAGE, puis par SOUS-SECTION.
+#  Les photos importées atterrissent dans public/images/uploads/.
 #  ============================================================
 
 backend:
@@ -10,27 +10,23 @@ backend:
   repo: MattRodr/chadow-website
   branch: main
 
-# Dossier où atterrissent les photos importées via l'admin
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
-# Langue de l'interface
 locale: "fr"
-
-# Petit confort : message de commit lisible dans l'historique GitHub
 site_url: "https://chadow.photo"
 display_url: "https://chadow.photo"
 
 collections:
-  # ---------------- ACCUEIL : galerie défilante ----------------
-  - name: "home"
-    label: "Accueil — Galerie"
-    description: "Les photos qui défilent en haut de la page d'accueil."
+  # ======================= ACCUEIL =======================
+  - name: "accueil"
+    label: "🏠 Accueil"
     files:
-      - name: "gallery"
-        label: "Galerie d'accueil"
-        file: "src/data/cms/home.json"
-        icon: "photo"
+      - name: "galerie"
+        label: "Galerie défilante"
+        file: "src/data/cms/home-hero.json"
+        icon: "photo_library"
+        description: "Les photos qui défilent en haut de la page d'accueil."
         fields:
           - name: "gallery"
             label: "Photos"
@@ -42,42 +38,88 @@ collections:
               - { name: "alt", label: "Description (accessibilité)", widget: "string", hint: "Décris brièvement la photo" }
               - { name: "context", label: "Contexte (artiste · lieu)", widget: "string", required: false }
 
-  # ---------------- PORTFOLIO ----------------
-  - name: "portfolio"
-    label: "Portfolio (page Work)"
-    description: "La grille de photos de la page Portfolio."
-    files:
-      - name: "items"
-        label: "Photos du portfolio"
-        file: "src/data/cms/portfolio.json"
-        icon: "grid_view"
+      - name: "photos-uniques"
+        label: "Photos uniques"
+        file: "src/data/cms/home-singles.json"
+        icon: "image"
+        description: "Deux grandes images de la page d'accueil."
         fields:
-          - name: "items"
-            label: "Photos"
+          - { name: "teaser", label: "Bloc « I'm Ambre »", widget: "image", hint: "Photo à côté de la présentation d'Ambre" }
+          - { name: "quote", label: "Citation « No staging » (fond)", widget: "image", hint: "Aussi utilisée sur la page À propos" }
+
+  # ======================= À PROPOS =======================
+  - name: "apropos"
+    label: "👤 À propos"
+    files:
+      - name: "portrait"
+        label: "Portrait"
+        file: "src/data/cms/about.json"
+        icon: "person"
+        description: "Le grand portrait en haut de la page À propos."
+        fields:
+          - { name: "portrait", label: "Portrait d'Ambre", widget: "image" }
+
+  # ======================= PORTFOLIO =======================
+  - name: "portfolio"
+    label: "🖼️ Portfolio"
+    files:
+      - name: "live"
+        label: "Live & Stage"
+        file: "src/data/cms/portfolio-live.json"
+        icon: "stadium"
+        description: "Concerts, festivals, performances live."
+        fields:
+          - name: "photos"
+            label: "Photos — Live & Stage"
             label_singular: "Photo"
             widget: "list"
             summary: "{{fields.title}} — {{fields.context}}"
             fields:
               - { name: "src", label: "Photo", widget: "image" }
-              - name: "category"
-                label: "Catégorie"
-                widget: "select"
-                options:
-                  - { label: "Live & Stage", value: "live-stage" }
-                  - { label: "Nightlife", value: "nightlife" }
-                  - { label: "Portraits & Editorial", value: "portraits-editorial" }
               - { name: "title", label: "Titre", widget: "string" }
               - { name: "context", label: "Contexte (lieu · date)", widget: "string", required: false }
 
-  # ---------------- SERVICES ----------------
+      - name: "nightlife"
+        label: "Nightlife"
+        file: "src/data/cms/portfolio-nightlife.json"
+        icon: "nightlife"
+        description: "DJ sets, clubs, dancefloors, ambiances de nuit."
+        fields:
+          - name: "photos"
+            label: "Photos — Nightlife"
+            label_singular: "Photo"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.context}}"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "title", label: "Titre", widget: "string" }
+              - { name: "context", label: "Contexte (lieu · date)", widget: "string", required: false }
+
+      - name: "portraits"
+        label: "Portraits & Editorial"
+        file: "src/data/cms/portfolio-portraits.json"
+        icon: "portrait"
+        description: "Séances studio, portraits, photographie éditoriale."
+        fields:
+          - name: "photos"
+            label: "Photos — Portraits & Editorial"
+            label_singular: "Photo"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.context}}"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "title", label: "Titre", widget: "string" }
+              - { name: "context", label: "Contexte (lieu · date)", widget: "string", required: false }
+
+  # ======================= SERVICES =======================
   - name: "services"
-    label: "Services — Images"
-    description: "Une vignette (aperçu) + une grande image par service."
+    label: "💼 Services"
     files:
       - name: "images"
         label: "Images des services"
         file: "src/data/cms/services.json"
         icon: "work"
+        description: "Pour chaque service : une vignette (aperçu accueil) + une grande image (page Services)."
         fields:
           - name: "live-nightlife-coverage"
             label: "Live & Nightlife Coverage"
@@ -104,30 +146,27 @@ collections:
               - { name: "card", label: "Vignette (aperçu accueil)", widget: "image" }
               - { name: "detail", label: "Grande image (page Services)", widget: "image" }
 
-  # ---------------- PHOTOS VEDETTES ----------------
-  - name: "featured"
-    label: "Photos vedettes"
-    description: "Images uniques utilisées en grand sur le site."
+  # ======================= CONTACT =======================
+  - name: "contact"
+    label: "✉️ Contact"
     files:
-      - name: "images"
-        label: "Photos vedettes"
-        file: "src/data/cms/featured.json"
-        icon: "star"
+      - name: "photo"
+        label: "Photo du formulaire"
+        file: "src/data/cms/contact.json"
+        icon: "mail"
+        description: "La photo affichée à côté du formulaire de contact."
         fields:
-          - { name: "aboutTeaser", label: "Accueil — bloc « I'm Ambre »", widget: "image" }
-          - { name: "approach", label: "Citation « No staging » (fond)", widget: "image" }
-          - { name: "aboutPortrait", label: "À propos — grand portrait", widget: "image" }
-          - { name: "contact", label: "Contact — photo près du formulaire", widget: "image" }
+          - { name: "image", label: "Photo", widget: "image" }
 
-  # ---------------- MARIAGE (page cachée) ----------------
-  - name: "weddings"
-    label: "Mariage (page privée)"
-    description: "Galerie de la page Mariage envoyée par lien direct."
+  # ======================= MARIAGE (privé) =======================
+  - name: "mariage"
+    label: "💍 Mariage (page privée)"
     files:
-      - name: "gallery"
+      - name: "galerie"
         label: "Galerie mariage"
         file: "src/data/cms/weddings.json"
         icon: "favorite"
+        description: "Galerie de la page Mariage envoyée par lien direct (non publique)."
         fields:
           - name: "gallery"
             label: "Photos"

@@ -3,28 +3,32 @@
  *  PHOTOS — Source unique de TOUTES les images du site
  * ============================================================
  *
- *  ⚠️  Les photos se gèrent désormais via l'interface d'admin :
- *      → chadow.photo/admin   (glisser-déposer, par section)
+ *  ⚠️  Les photos se gèrent via l'interface d'admin :
+ *      → chadow.photo/admin   (glisser-déposer, organisé par page)
  *
- *  Ce fichier ne fait que LIRE les données JSON éditées par le CMS
- *  (dossier src/data/cms/). Tu peux toujours éditer ces JSON à la
- *  main si besoin — mais l'interface /admin est faite pour ça.
+ *  Ce fichier LIT les données JSON éditées par le CMS (dossier
+ *  src/data/cms/), organisées par PAGE puis par SOUS-SECTION :
  *
- *  Fichiers de données (éditables) :
- *    src/data/cms/home.json       → galerie d'accueil
- *    src/data/cms/featured.json   → photos vedettes (about, approche, contact)
- *    src/data/cms/services.json   → 1 image par service
- *    src/data/cms/portfolio.json  → grille du portfolio
- *    src/data/cms/weddings.json   → galerie de la page Mariage
- *
- *  La carte complète des emplacements est dans PHOTOS.md.
+ *    home-hero.json          → Accueil · galerie défilante
+ *    home-singles.json       → Accueil · teaser + citation
+ *    about.json              → À propos · portrait
+ *    contact.json            → Contact · photo du formulaire
+ *    services.json           → Services · 1 vignette + 1 grande image / service
+ *    portfolio-live.json     → Portfolio · Live & Stage
+ *    portfolio-nightlife.json→ Portfolio · Nightlife
+ *    portfolio-portraits.json→ Portfolio · Portraits & Editorial
+ *    weddings.json           → Mariage (page privée) · galerie
  * ============================================================
  */
 
-import homeData from "./cms/home.json";
-import featuredData from "./cms/featured.json";
+import homeHero from "./cms/home-hero.json";
+import homeSingles from "./cms/home-singles.json";
+import aboutData from "./cms/about.json";
+import contactData from "./cms/contact.json";
 import serviceData from "./cms/services.json";
-import portfolioData from "./cms/portfolio.json";
+import portfolioLive from "./cms/portfolio-live.json";
+import portfolioNightlife from "./cms/portfolio-nightlife.json";
+import portfolioPortraits from "./cms/portfolio-portraits.json";
 
 export interface Photo {
   src: string;
@@ -36,13 +40,22 @@ export interface Photo {
 export const brandLogo = "/brand/chadow-logo.png";
 
 /* ---------- ACCUEIL — galerie défilante ---------- */
-export const homePhotos: Photo[] = homeData.gallery;
+export const homePhotos: Photo[] = homeHero.gallery;
 
-/* ---------- PHOTOS VEDETTES ---------- */
-export const featuredImages = featuredData;
+/* ---------- PHOTOS VEDETTES (assemblées depuis les pages) ---------- */
+export const featuredImages = {
+  aboutTeaser:   homeSingles.teaser, // Accueil — bloc "I'm Ambre"
+  approach:      homeSingles.quote,  // Accueil + À propos — citation "No staging"
+  aboutPortrait: aboutData.portrait, // À propos — grand portrait
+  contact:       contactData.image,  // Contact — photo du formulaire
+};
 
 /* ---------- SERVICES — 2 images par service ---------- */
 export const serviceImages = serviceData;
 
-/* ---------- PORTFOLIO ---------- */
-export const portfolioItems = portfolioData.items;
+/* ---------- PORTFOLIO — fusion des 3 sous-catégories ---------- */
+export const portfolioItems = [
+  ...portfolioLive.photos.map((p) => ({ ...p, category: "live-stage" })),
+  ...portfolioNightlife.photos.map((p) => ({ ...p, category: "nightlife" })),
+  ...portfolioPortraits.photos.map((p) => ({ ...p, category: "portraits-editorial" })),
+];
