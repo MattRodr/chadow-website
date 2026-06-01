@@ -1,0 +1,138 @@
+#  ============================================================
+#  CHADOW — Configuration de l'interface d'admin (Sveltia CMS)
+#  ============================================================
+#  Chaque "collection" ci-dessous = une section éditable du site.
+#  Les photos importées sont enregistrées dans public/images/uploads/.
+#  ============================================================
+
+backend:
+  name: github
+  repo: MattRodr/chadow-website
+  branch: main
+
+# Dossier où atterrissent les photos importées via l'admin
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+# Langue de l'interface
+locale: "fr"
+
+# Petit confort : message de commit lisible dans l'historique GitHub
+site_url: "https://chadow.photo"
+display_url: "https://chadow.photo"
+
+collections:
+  # ---------------- ACCUEIL : galerie défilante ----------------
+  - name: "home"
+    label: "Accueil — Galerie"
+    description: "Les photos qui défilent en haut de la page d'accueil."
+    files:
+      - name: "gallery"
+        label: "Galerie d'accueil"
+        file: "src/data/cms/home.json"
+        icon: "photo"
+        fields:
+          - name: "gallery"
+            label: "Photos"
+            label_singular: "Photo"
+            widget: "list"
+            summary: "{{fields.context}}"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "alt", label: "Description (accessibilité)", widget: "string", hint: "Décris brièvement la photo" }
+              - { name: "context", label: "Contexte (artiste · lieu)", widget: "string", required: false }
+
+  # ---------------- PORTFOLIO ----------------
+  - name: "portfolio"
+    label: "Portfolio (page Work)"
+    description: "La grille de photos de la page Portfolio."
+    files:
+      - name: "items"
+        label: "Photos du portfolio"
+        file: "src/data/cms/portfolio.json"
+        icon: "grid_view"
+        fields:
+          - name: "items"
+            label: "Photos"
+            label_singular: "Photo"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.context}}"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - name: "category"
+                label: "Catégorie"
+                widget: "select"
+                options:
+                  - { label: "Live & Stage", value: "live-stage" }
+                  - { label: "Nightlife", value: "nightlife" }
+                  - { label: "Portraits & Editorial", value: "portraits-editorial" }
+              - { name: "title", label: "Titre", widget: "string" }
+              - { name: "context", label: "Contexte (lieu · date)", widget: "string", required: false }
+
+  # ---------------- SERVICES ----------------
+  - name: "services"
+    label: "Services — Images"
+    description: "Une vignette (aperçu) + une grande image par service."
+    files:
+      - name: "images"
+        label: "Images des services"
+        file: "src/data/cms/services.json"
+        icon: "work"
+        fields:
+          - name: "live-nightlife-coverage"
+            label: "Live & Nightlife Coverage"
+            widget: "object"
+            fields:
+              - { name: "card", label: "Vignette (aperçu accueil)", widget: "image" }
+              - { name: "detail", label: "Grande image (page Services)", widget: "image" }
+          - name: "portraits-editorial"
+            label: "Portraits & Editorial"
+            widget: "object"
+            fields:
+              - { name: "card", label: "Vignette (aperçu accueil)", widget: "image" }
+              - { name: "detail", label: "Grande image (page Services)", widget: "image" }
+          - name: "event-coverage"
+            label: "Event Coverage"
+            widget: "object"
+            fields:
+              - { name: "card", label: "Vignette (aperçu accueil)", widget: "image" }
+              - { name: "detail", label: "Grande image (page Services)", widget: "image" }
+          - name: "video-content"
+            label: "Video Content"
+            widget: "object"
+            fields:
+              - { name: "card", label: "Vignette (aperçu accueil)", widget: "image" }
+              - { name: "detail", label: "Grande image (page Services)", widget: "image" }
+
+  # ---------------- PHOTOS VEDETTES ----------------
+  - name: "featured"
+    label: "Photos vedettes"
+    description: "Images uniques utilisées en grand sur le site."
+    files:
+      - name: "images"
+        label: "Photos vedettes"
+        file: "src/data/cms/featured.json"
+        icon: "star"
+        fields:
+          - { name: "aboutTeaser", label: "Accueil — bloc « I'm Ambre »", widget: "image" }
+          - { name: "approach", label: "Citation « No staging » (fond)", widget: "image" }
+          - { name: "aboutPortrait", label: "À propos — grand portrait", widget: "image" }
+          - { name: "contact", label: "Contact — photo près du formulaire", widget: "image" }
+
+  # ---------------- MARIAGE (page cachée) ----------------
+  - name: "weddings"
+    label: "Mariage (page privée)"
+    description: "Galerie de la page Mariage envoyée par lien direct."
+    files:
+      - name: "gallery"
+        label: "Galerie mariage"
+        file: "src/data/cms/weddings.json"
+        icon: "favorite"
+        fields:
+          - name: "gallery"
+            label: "Photos"
+            label_singular: "Photo"
+            widget: "list"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "alt", label: "Description (accessibilité)", widget: "string", required: false }
