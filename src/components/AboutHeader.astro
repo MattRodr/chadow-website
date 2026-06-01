@@ -30,10 +30,14 @@ const t = getT(lang);
 <style>
   .about-header {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+    /* Colonne texte calée sur son contenu (≤560px), photo dans le reste.
+       Empêche le grand vide au milieu sur écran large. */
+    grid-template-columns: minmax(0, 560px) minmax(0, 1fr);
     gap: clamp(28px, 5vw, 72px);
     align-items: center;
     padding: 16px 0 8px;
+    /* Garde le texte et la photo groupés (pas d'écartement sur grand écran) */
+    max-width: 1160px;
   }
   .about-header__content { display: flex; flex-direction: column; gap: 28px; max-width: 560px; }
 
@@ -68,8 +72,8 @@ const t = getT(lang);
 
   .about-header__media {
     margin: 0;
-    max-width: 520px;
-    justify-self: end;
+    max-width: 500px;
+    justify-self: start; /* près du texte, pas collé au bord droit */
     width: 100%;
     aspect-ratio: 3 / 4;
     border-radius: var(--radius);
