@@ -19,7 +19,7 @@ export const site = {
   url: "https://chadow.photo",
   description: "Event & Music Photographer based in Montréal.",
   // Image affichée quand on partage le site (réseaux sociaux, iMessage…)
-  ogImage: "/images/home/choses-sauvages-club-soda-2025.jpg",
+  ogImage: "/og-image.jpg",
 };
 
 export const trustedBy = [

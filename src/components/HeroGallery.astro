@@ -28,6 +28,8 @@ const { photos = homePhotos } = Astro.props;
               src={item.src}
               alt={item.alt}
               loading={idx < 4 ? "eager" : "lazy"}
+              fetchpriority={idx === 0 ? "high" : undefined}
+              decoding={idx < 4 ? "sync" : "async"}
               class="tile__media"
             />
           </figure>

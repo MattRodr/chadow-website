@@ -28,6 +28,13 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 ::selection { background: #fff; color: #000; }
 
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 .skip-link {
   position: absolute;
   left: -9999px;
