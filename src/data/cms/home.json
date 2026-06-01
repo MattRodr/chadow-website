@@ -1,9 +1,34 @@
 {
   "gallery": [
-    { "src": "/images/home/choses-sauvages-club-soda-2025.jpg", "alt": "Crowd surfing — Choses Sauvages", "context": "Choses Sauvages · Club Soda" },
-    { "src": "/images/home/hologramme-sat-2025.jpg", "alt": "Hologramme en live au SAT", "context": "Hologramme · SAT" },
-    { "src": "/images/home/fakear-fairmount-2024.jpg", "alt": "Fakear au Fairmount", "context": "Fakear · Fairmount" },
-    { "src": "/images/home/elderbrook-mtelus-2025.jpg", "alt": "Elderbrook sur scène", "context": "Elderbrook · MTELUS" },
-    { "src": "/images/home/cirque-luzia-2025.jpg", "alt": "Cirque du Soleil — LUZIA", "context": "Cirque du Soleil · LUZIA" }
+    {
+      "src": "/images/home/choses-sauvages-club-soda-2025.jpg",
+      "alt": "Crowd surfing — Choses Sauvages",
+      "context": "Choses Sauvages · Club Soda"
+    },
+    {
+      "src": "/images/home/hologramme-sat-2025.jpg",
+      "alt": "Hologramme en live au SAT",
+      "context": "Hologramme · SAT"
+    },
+    {
+      "src": "/images/home/fakear-fairmount-2024.jpg",
+      "alt": "Fakear au Fairmount",
+      "context": "Fakear · Fairmount"
+    },
+    {
+      "src": "/images/home/elderbrook-mtelus-2025.jpg",
+      "alt": "Elderbrook sur scène",
+      "context": "Elderbrook · MTELUS"
+    },
+    {
+      "src": "/images/home/cirque-luzia-2025.jpg",
+      "alt": "Cirque du Soleil — LUZIA",
+      "context": "Cirque du Soleil · LUZIA"
+    },
+    {
+      "src": "https://picsum.photos/id/368/1920/1280.webp",
+      "alt": "Test",
+      "context": ""
+    }
   ]
 }
