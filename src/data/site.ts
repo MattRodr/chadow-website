@@ -5,10 +5,10 @@
  *  Les TEXTES traduisibles → voir src/i18n/translations.ts
  */
 
-import { homePhotos, recentPhotos, featuredImages, serviceImages, portfolioItems, brandLogo } from "./photos";
+import { homePhotos, recentPhotos, instagramMosaic, featuredImages, serviceImages, portfolioItems, portfolioSelectedItems, brandLogo } from "./photos";
 
 // Re-exports so components keep a single import surface.
-export { homePhotos, recentPhotos, featuredImages, portfolioItems, brandLogo };
+export { homePhotos, recentPhotos, instagramMosaic, featuredImages, portfolioItems, portfolioSelectedItems, brandLogo };
 
 export const site = {
   name: "CHADOW",

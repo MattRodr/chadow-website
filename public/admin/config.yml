@@ -75,10 +75,43 @@ collections:
         fields:
           - { name: "portrait", label: "Portrait d'Ambre", widget: "image" }
 
+      - name: "instagram"
+        label: "Mosaïque Instagram"
+        file: "src/data/cms/about-instagram.json"
+        icon: "grid_view"
+        description: "Les 4 photos de la mosaïque « Follow the work as it happens » sur la page À propos."
+        fields:
+          - name: "mosaic"
+            label: "Photos (4)"
+            label_singular: "Photo"
+            widget: "list"
+            min: 4
+            max: 4
+            summary: "{{fields.alt}}"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "alt", label: "Description (accessibilité)", widget: "string", hint: "Décris brièvement la photo" }
+
   # ======================= PORTFOLIO =======================
   - name: "portfolio"
     label: "🖼️ Portfolio"
     files:
+      - name: "selected"
+        label: "Selected Work (onglet « tout »)"
+        file: "src/data/cms/portfolio-selected.json"
+        icon: "star"
+        description: "La sélection curatée affichée sur l'onglet « Selected Work » de la page Portfolio. Choisis librement les meilleures photos, indépendamment des sous-catégories."
+        fields:
+          - name: "photos"
+            label: "Photos — Selected Work"
+            label_singular: "Photo"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.context}}"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "title", label: "Titre", widget: "string" }
+              - { name: "context", label: "Contexte (lieu · date)", widget: "string", required: false }
+
       - name: "live"
         label: "Live & Stage"
         file: "src/data/cms/portfolio-live.json"

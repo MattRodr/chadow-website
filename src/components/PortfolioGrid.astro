@@ -1,8 +1,14 @@
 ---
-import { portfolioCategories, portfolioItems } from "../data/site";
+import { portfolioCategories, portfolioItems, portfolioSelectedItems } from "../data/site";
 import { getLang, getT } from "../i18n/utils";
 const lang = getLang(Astro);
 const t = getT(lang);
+
+// The grid renders BOTH the curated "Selected Work" set AND every categorized
+// photo. The filter JS shows the selected set on the "all" tab, and each
+// category's full list on its own tab. This keeps the markup static and lets
+// the admin curate "Selected Work" independently from the categorized lists.
+const allItems = [...portfolioSelectedItems, ...portfolioItems];
 ---
 <div class="portfolio">
   <div class="portfolio__filters" role="tablist" aria-label="Portfolio categories">
@@ -28,7 +34,7 @@ const t = getT(lang);
   </p>
 
   <ul class="portfolio__grid" id="portfolio-grid">
-    {portfolioItems.map((item, i) => (
+    {allItems.map((item, i) => (
       <li class="portfolio__item" data-category={item.category} data-reveal="up" data-reveal-delay={Math.min(i * 60, 480)}>
         <figure
           class="portfolio__figure"
@@ -67,7 +73,7 @@ const t = getT(lang);
       });
       items.forEach((item) => {
         const cat = item.dataset.category;
-        const show = target === "all" || cat === target;
+        const show = target === "all" ? cat === "selected" : cat === target;
         (item as HTMLElement).style.display = show ? "" : "none";
       });
       if (leadEl && leads[target]) {
@@ -92,11 +98,10 @@ const t = getT(lang);
 
     const params = new URLSearchParams(window.location.search);
     const initial = params.get("filter");
-    if (initial && Array.from(filters).some((f) => f.dataset.filter === initial)) {
-      apply(initial);
-    } else if (leadEl) {
-      leadEl.classList.add("is-shown");
-    }
+    const target =
+      initial && Array.from(filters).some((f) => f.dataset.filter === initial) ? initial : "all";
+    apply(target);
+    if (leadEl) leadEl.classList.add("is-shown");
   }
 
   document.addEventListener("astro:page-load", setupPortfolio);

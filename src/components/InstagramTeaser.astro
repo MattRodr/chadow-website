@@ -1,15 +1,15 @@
 ---
-import { site, homePhotos } from "../data/site";
+import { site, instagramMosaic, homePhotos } from "../data/site";
 import { getLang, getT } from "../i18n/utils";
 const lang = getLang(Astro);
 const t = getT(lang);
 
-// Pick 4 strong frames for the mosaic (re-use existing assets)
+// 4 photos for the mosaic — pad from homePhotos if fewer than 4 are configured
 const previews = [
-  homePhotos[0], // Choses Sauvages — red crowd
-  homePhotos[3], // Elderbrook — B&W
-  homePhotos[1], // Hologramme — orange
-  homePhotos[2], // Fakear — green
+  instagramMosaic[0] ?? homePhotos[0],
+  instagramMosaic[1] ?? homePhotos[3],
+  instagramMosaic[2] ?? homePhotos[1],
+  instagramMosaic[3] ?? homePhotos[2],
 ];
 ---
 <section class="ig" aria-labelledby="ig-title">

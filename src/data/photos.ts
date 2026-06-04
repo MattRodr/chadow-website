@@ -13,8 +13,10 @@
  *    home-recent.json        → Accueil · grille « Latest moments »
  *    home-singles.json       → Accueil · teaser + citation
  *    about.json              → À propos · portrait
+ *    about-instagram.json    → À propos · mosaïque Instagram (4 photos)
  *    contact.json            → Contact · photo du formulaire
  *    services.json           → Services · 1 vignette + 1 grande image / service
+ *    portfolio-selected.json → Portfolio · Selected Work (onglet « all » curaté)
  *    portfolio-live.json     → Portfolio · Live & Stage
  *    portfolio-nightlife.json→ Portfolio · Nightlife
  *    portfolio-portraits.json→ Portfolio · Portraits & Editorial
@@ -26,8 +28,10 @@ import homeHero from "./cms/home-hero.json";
 import homeRecent from "./cms/home-recent.json";
 import homeSingles from "./cms/home-singles.json";
 import aboutData from "./cms/about.json";
+import aboutInstagram from "./cms/about-instagram.json";
 import contactData from "./cms/contact.json";
 import serviceData from "./cms/services.json";
+import portfolioSelected from "./cms/portfolio-selected.json";
 import portfolioLive from "./cms/portfolio-live.json";
 import portfolioNightlife from "./cms/portfolio-nightlife.json";
 import portfolioPortraits from "./cms/portfolio-portraits.json";
@@ -47,6 +51,9 @@ export const homePhotos: Photo[] = homeHero.gallery;
 /* ---------- ACCUEIL — grille « Latest moments » ---------- */
 export const recentPhotos: Photo[] = homeRecent.gallery;
 
+/* ---------- À PROPOS — mosaïque Instagram (4 photos) ---------- */
+export const instagramMosaic: Photo[] = aboutInstagram.mosaic;
+
 /* ---------- PHOTOS VEDETTES (assemblées depuis les pages) ---------- */
 export const featuredImages = {
   aboutTeaser:   homeSingles.teaser, // Accueil — bloc "I'm Ambre"
@@ -64,3 +71,6 @@ export const portfolioItems = [
   ...portfolioNightlife.photos.map((p) => ({ ...p, category: "nightlife" })),
   ...portfolioPortraits.photos.map((p) => ({ ...p, category: "portraits-editorial" })),
 ];
+
+/* ---------- PORTFOLIO — sélection curatée (onglet « Selected Work ») ---------- */
+export const portfolioSelectedItems = portfolioSelected.photos.map((p) => ({ ...p, category: "selected" }));

@@ -1,0 +1,12 @@
+{
+  "photos": [
+    { "src": "/images/work/super-plage-francos-2025.jpg", "title": "Super Plage", "context": "Francos · Juin 2025" },
+    { "src": "/images/home/choses-sauvages-club-soda-2025.jpg", "title": "Choses Sauvages", "context": "Club Soda · Avril 2025" },
+    { "src": "/images/home/elderbrook-mtelus-2025.jpg", "title": "Elderbrook", "context": "MTELUS · Avril 2025" },
+    { "src": "/images/work/backwash-sat-2025.jpg", "title": "Backwash", "context": "SAT · Avril 2025" },
+    { "src": "/images/home/cirque-luzia-2025.jpg", "title": "Cirque du Soleil — LUZIA", "context": "Mai 2025" },
+    { "src": "/images/home/fakear-fairmount-2024.jpg", "title": "Fakear", "context": "Fairmount · Novembre 2024" },
+    { "src": "/images/home/hologramme-sat-2025.jpg", "title": "Hologramme", "context": "SAT · Juin 2025" },
+    { "src": "/images/work/kazy-lambist-club-soda-2025.jpg", "title": "Kazy Lambist", "context": "Club Soda · FIJM 2025" }
+  ]
+}
