@@ -9,7 +9,8 @@
  *  Ce fichier LIT les données JSON éditées par le CMS (dossier
  *  src/data/cms/), organisées par PAGE puis par SOUS-SECTION :
  *
- *    home-hero.json          → Accueil · galerie défilante
+ *    home-hero.json          → Accueil · galerie défilante (haut de page)
+ *    home-recent.json        → Accueil · grille « Latest moments »
  *    home-singles.json       → Accueil · teaser + citation
  *    about.json              → À propos · portrait
  *    contact.json            → Contact · photo du formulaire
@@ -22,6 +23,7 @@
  */
 
 import homeHero from "./cms/home-hero.json";
+import homeRecent from "./cms/home-recent.json";
 import homeSingles from "./cms/home-singles.json";
 import aboutData from "./cms/about.json";
 import contactData from "./cms/contact.json";
@@ -39,8 +41,11 @@ export interface Photo {
 /* ---------- LOGO ---------- */
 export const brandLogo = "/brand/chadow-logo.png";
 
-/* ---------- ACCUEIL — galerie défilante ---------- */
+/* ---------- ACCUEIL — galerie défilante (haut de page) ---------- */
 export const homePhotos: Photo[] = homeHero.gallery;
+
+/* ---------- ACCUEIL — grille « Latest moments » ---------- */
+export const recentPhotos: Photo[] = homeRecent.gallery;
 
 /* ---------- PHOTOS VEDETTES (assemblées depuis les pages) ---------- */
 export const featuredImages = {

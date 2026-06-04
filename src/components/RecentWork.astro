@@ -1,8 +1,8 @@
 ---
-import { homePhotos } from "../data/site";
+import { recentPhotos } from "../data/site";
 
-// Use 6 slots — repeat the 5 photos by adding the strongest one twice if needed
-const photos = homePhotos.length >= 6 ? homePhotos.slice(0, 6) : [...homePhotos, homePhotos[0]];
+// Use 6 slots — repeat the strongest photo if fewer than 6 are provided
+const photos = recentPhotos.length >= 6 ? recentPhotos.slice(0, 6) : [...recentPhotos, recentPhotos[0]];
 ---
 <div class="recent-work">
   <ul class="grid">

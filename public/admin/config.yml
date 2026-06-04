@@ -23,10 +23,26 @@ collections:
     label: "🏠 Accueil"
     files:
       - name: "galerie"
-        label: "Galerie défilante"
+        label: "Galerie défilante (haut de page)"
         file: "src/data/cms/home-hero.json"
         icon: "photo_library"
         description: "Les photos qui défilent en haut de la page d'accueil."
+        fields:
+          - name: "gallery"
+            label: "Photos"
+            label_singular: "Photo"
+            widget: "list"
+            summary: "{{fields.context}}"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "alt", label: "Description (accessibilité)", widget: "string", hint: "Décris brièvement la photo" }
+              - { name: "context", label: "Contexte (artiste · lieu)", widget: "string", required: false }
+
+      - name: "latest-moments"
+        label: "Latest moments (grille)"
+        file: "src/data/cms/home-recent.json"
+        icon: "grid_view"
+        description: "La grille de 6 photos sous le hero (section « Latest moments »). Si tu mets moins de 6 photos, la première sera dupliquée."
         fields:
           - name: "gallery"
             label: "Photos"
