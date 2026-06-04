@@ -1,10 +1,28 @@
 {
   "gallery": [
-    { "src": "/images/home/choses-sauvages-club-soda-2025.jpg", "alt": "Moment" },
-    { "src": "/images/work/super-plage-francos-2025.jpg", "alt": "Moment" },
-    { "src": "/images/home/elderbrook-mtelus-2025.jpg", "alt": "Moment" },
-    { "src": "/images/work/backwash-sat-2025.jpg", "alt": "Moment" },
-    { "src": "/images/home/fakear-fairmount-2024.jpg", "alt": "Moment" },
-    { "src": "/images/home/cirque-luzia-2025.jpg", "alt": "Moment" }
+    {
+      "src": "/images/uploads/97872b859ed75479e70b38bc96aa175e.jpeg",
+      "alt": "Moment"
+    },
+    {
+      "src": "/images/work/super-plage-francos-2025.jpg",
+      "alt": "Moment"
+    },
+    {
+      "src": "/images/home/elderbrook-mtelus-2025.jpg",
+      "alt": "Moment"
+    },
+    {
+      "src": "/images/work/backwash-sat-2025.jpg",
+      "alt": "Moment"
+    },
+    {
+      "src": "/images/home/fakear-fairmount-2024.jpg",
+      "alt": "Moment"
+    },
+    {
+      "src": "/images/home/cirque-luzia-2025.jpg",
+      "alt": "Moment"
+    }
   ]
 }
