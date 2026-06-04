@@ -207,15 +207,73 @@ collections:
         fields:
           - { name: "image", label: "Photo", widget: "image" }
 
-  # ======================= MARIAGE (privé) =======================
-  - name: "mariage"
-    label: "💍 Mariage (page privée)"
+  # ======================= PAGES PRIVÉES (par lien direct) =======================
+  # Ces galeries alimentent des pages cachées (noindex, hors sitemap, hors menu).
+  # On les partage uniquement par lien direct (ex: chadow.photo/corporate).
+  - name: "pages-privees"
+    label: "🔒 Pages privées"
     files:
-      - name: "galerie"
-        label: "Galerie mariage"
+      - name: "weddings"
+        label: "Weddings & Celebrations"
         file: "src/data/cms/weddings.json"
         icon: "favorite"
-        description: "Galerie de la page Mariage envoyée par lien direct (non publique)."
+        description: "Galerie de la page Mariages & Célébrations (chadow.photo/weddings)."
+        fields:
+          - name: "gallery"
+            label: "Photos"
+            label_singular: "Photo"
+            widget: "list"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "alt", label: "Description (accessibilité)", widget: "string", required: false }
+
+      - name: "corporate"
+        label: "Corporate & Brand"
+        file: "src/data/cms/corporate.json"
+        icon: "business"
+        description: "Galerie de la page Corporate & Brand (chadow.photo/corporate)."
+        fields:
+          - name: "gallery"
+            label: "Photos"
+            label_singular: "Photo"
+            widget: "list"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "alt", label: "Description (accessibilité)", widget: "string", required: false }
+
+      - name: "sports"
+        label: "Sports & Action"
+        file: "src/data/cms/sports.json"
+        icon: "sports_soccer"
+        description: "Galerie de la page Sports & Action (chadow.photo/sports)."
+        fields:
+          - name: "gallery"
+            label: "Photos"
+            label_singular: "Photo"
+            widget: "list"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "alt", label: "Description (accessibilité)", widget: "string", required: false }
+
+      - name: "architecture"
+        label: "Architecture & Real Estate"
+        file: "src/data/cms/architecture.json"
+        icon: "apartment"
+        description: "Galerie de la page Architecture & Real Estate (chadow.photo/architecture)."
+        fields:
+          - name: "gallery"
+            label: "Photos"
+            label_singular: "Photo"
+            widget: "list"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "alt", label: "Description (accessibilité)", widget: "string", required: false }
+
+      - name: "travel"
+        label: "Travel & Tourism"
+        file: "src/data/cms/travel.json"
+        icon: "flight"
+        description: "Galerie de la page Travel & Tourism (chadow.photo/travel)."
         fields:
           - name: "gallery"
             label: "Photos"

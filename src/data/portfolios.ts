@@ -8,35 +8,47 @@
  *   - non référencées par Google (noindex)
  *   - exclues du sitemap.xml
  *
- *  POUR AJOUTER UNE NICHE (ex: headshots, corporate, studio) :
- *   1. Ajoute une entrée ci-dessous (en + fr + gallery)
- *   2. Ajoute son slug dans `hiddenSlugs`
+ *  POUR AJOUTER UNE NICHE (ex: headshots, studio) :
+ *   1. Ajoute une entrée ci-dessous (slug + titre fr/en)
+ *      Tous les champs texte (eyebrow, intro, service, cta...) sont
+ *      optionnels — laissés vides, ils ne sont simplement pas affichés.
+ *   2. Ajoute son slug dans `hiddenSlugs` (et dans HIDDEN_SLUGS de
+ *      astro.config.mjs).
  *   3. Crée src/pages/<slug>.astro et src/pages/fr/<slug>.astro
- *      (copie ceux de weddings, change juste la clé)
- *
- *  POUR LES PHOTOS d'une niche :
- *   - dépose-les dans public/images/<slug>/
- *   - liste-les dans `gallery` ci-dessous
+ *      (copie ceux de weddings, change juste la clé).
+ *   4. Crée src/data/cms/<slug>.json avec { "gallery": [] }
+ *   5. Ajoute une collection dans public/admin/config.yml
+ *      pour pouvoir éditer la galerie via Sveltia.
  * ============================================================
  */
 
 import type { Photo } from "./photos";
 import weddingsData from "./cms/weddings.json";
+import corporateData from "./cms/corporate.json";
+import sportsData from "./cms/sports.json";
+import architectureData from "./cms/architecture.json";
+import travelData from "./cms/travel.json";
 
 /** Slugs des pages cachées — utilisés pour les exclure du sitemap. */
-export const hiddenSlugs = ["weddings"];
+export const hiddenSlugs = [
+  "weddings",
+  "corporate",
+  "sports",
+  "architecture",
+  "travel",
+];
 
 interface NicheContent {
-  eyebrow: string;
   title: string;
-  intro: string[];
-  serviceLabel: string;
-  serviceTitle: string;
-  serviceCopy: string;
-  includesLabel: string;
-  includes: string[];
-  ctaLabel: string;
-  ctaNote: string;
+  eyebrow?: string;
+  intro?: string[];
+  serviceLabel?: string;
+  serviceTitle?: string;
+  serviceCopy?: string;
+  includesLabel?: string;
+  includes?: string[];
+  ctaLabel?: string;
+  ctaNote?: string;
 }
 
 interface NichePage {
@@ -51,7 +63,7 @@ export const portfolios: Record<string, NichePage> = {
     slug: "weddings",
     en: {
       eyebrow: "Private collection · By invitation",
-      title: "Weddings",
+      title: "Weddings & Celebrations",
       intro: [
         "The same instinct I bring to a stage — present, discreet, fast — turned toward the most personal day of your life.",
         "I don't interrupt the moment. I find the look between two people and make sure it's never lost. Natural, timeless, emotion first — no stiff poses, no staged smiles. Just your day, as it actually felt.",
@@ -74,7 +86,7 @@ export const portfolios: Record<string, NichePage> = {
     },
     fr: {
       eyebrow: "Collection privée · Sur invitation",
-      title: "Mariages",
+      title: "Mariages & Célébrations",
       intro: [
         "Le même instinct que sur scène — présent, discret, rapide — tourné vers le jour le plus personnel de votre vie.",
         "Je n'interromps pas le moment. Je trouve le regard entre deux personnes et veille à ce qu'il ne soit jamais perdu. Naturel, intemporel, l'émotion avant tout — pas de poses figées, pas de sourires forcés. Juste votre journée, telle qu'elle a été vécue.",
@@ -97,5 +109,33 @@ export const portfolios: Record<string, NichePage> = {
     },
     // Galerie éditable via /admin → src/data/cms/weddings.json
     gallery: weddingsData.gallery,
+  },
+
+  corporate: {
+    slug: "corporate",
+    en: { title: "Corporate & Brand" },
+    fr: { title: "Corporate & Brand" },
+    gallery: corporateData.gallery,
+  },
+
+  sports: {
+    slug: "sports",
+    en: { title: "Sports & Action" },
+    fr: { title: "Sports & Action" },
+    gallery: sportsData.gallery,
+  },
+
+  architecture: {
+    slug: "architecture",
+    en: { title: "Architecture & Real Estate" },
+    fr: { title: "Architecture & Real Estate" },
+    gallery: architectureData.gallery,
+  },
+
+  travel: {
+    slug: "travel",
+    en: { title: "Travel & Tourism" },
+    fr: { title: "Travel & Tourism" },
+    gallery: travelData.gallery,
   },
 };

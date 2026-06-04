@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // Pages cachées (par niche) à NE PAS référencer dans le sitemap / Google.
 // Garder en phase avec `hiddenSlugs` dans src/data/portfolios.ts.
-const HIDDEN_SLUGS = ['weddings'];
+const HIDDEN_SLUGS = ['weddings', 'corporate', 'sports', 'architecture', 'travel'];
 
 // https://astro.build/config
 export default defineConfig({

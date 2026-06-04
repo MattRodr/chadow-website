@@ -5,8 +5,8 @@ import { portfolios } from "../../data/portfolios";
 import { getLang } from "../../i18n/utils";
 
 const lang = getLang(Astro);
-const c = portfolios.weddings[lang];
+const c = portfolios.architecture[lang];
 ---
 <PortfolioLayout title={c.title} description={c.intro?.[0]}>
-  <NichePortfolio slug="weddings" />
+  <NichePortfolio slug="architecture" />
 </PortfolioLayout>
