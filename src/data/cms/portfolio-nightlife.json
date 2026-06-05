@@ -1,7 +1,19 @@
 {
   "photos": [
-    { "src": "/images/home/fakear-fairmount-2024.jpg", "title": "Fakear", "context": "Fairmount · Novembre 2024" },
-    { "src": "/images/home/hologramme-sat-2025.jpg", "title": "Hologramme", "context": "SAT · Juin 2025" },
-    { "src": "/images/work/kazy-lambist-club-soda-2025.jpg", "title": "Kazy Lambist", "context": "Club Soda · FIJM 2025" }
+    {
+      "src": "/images/uploads/FAKEAR - FAIRMOUNT - NOVEMBRE 2024(1).jpg",
+      "title": "Fakear",
+      "context": "Fairmount · Novembre 2024"
+    },
+    {
+      "src": "/images/uploads/KAZY LAMBIST - CLUB SODA - JUIN 2025 .jpg",
+      "title": "Kazy Lambist",
+      "context": "Club Soda . Les Francos .  Juin 2025"
+    },
+    {
+      "src": "/images/uploads/DSC02344-Enhanced-NR.jpg",
+      "title": "Joris Delacroix",
+      "context": "Theatre Fairmount · Octobre 2024"
+    }
   ]
 }
