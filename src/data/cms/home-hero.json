@@ -26,11 +26,6 @@
       "context": "Elderbrook · MTELUS · Montréal"
     },
     {
-      "src": "/images/home/cirque-luzia-2025.jpg",
-      "alt": "Cirque du Soleil — LUZIA · Montréal",
-      "context": "Cirque du Soleil · LUZIA · Montréal"
-    },
-    {
       "src": "/images/uploads/DSC00146-2.jpg",
       "alt": "The Fray au Mtelus  et  Montréal apres 12 ans",
       "context": "The Fray · Mtelus  · Montréal"
@@ -39,6 +34,11 @@
       "src": "/images/home/fakear-fairmount-2024.jpg",
       "alt": "Fakear au Fairmount  · Montréal",
       "context": "Fakear · Fairmount  · Montréal"
+    },
+    {
+      "src": "/images/home/cirque-luzia-2025.jpg",
+      "alt": "Cirque du Soleil — LUZIA · Montréal",
+      "context": "Cirque du Soleil · LUZIA · Montréal"
     }
   ]
 }
