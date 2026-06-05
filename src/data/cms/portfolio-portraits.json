@@ -1,3 +1,29 @@
 {
-  "photos": []
+  "photos": [
+    {
+      "src": "/images/uploads/DSC01678-Modifier 2-2-2.jpg",
+      "title": "Oxymore",
+      "context": "Montréal . 2025"
+    },
+    {
+      "src": "/images/uploads/DSC01640.jpg",
+      "title": "Oxymore  - Darkside",
+      "context": "Montréal . 2025"
+    },
+    {
+      "src": "/images/uploads/DSC00398.jpg",
+      "title": "Pyramido",
+      "context": "Montréal . 2024"
+    },
+    {
+      "src": "/images/uploads/Anne-Sarah Charbonneau- Le Terminal - Aout 2024.jpg",
+      "title": "Le Terminal",
+      "context": "Montréal . 2024"
+    },
+    {
+      "src": "/images/uploads/FAKEAR - FAIRMOUNT - NOVEMBRE 2024(4).jpg",
+      "title": "Fakear",
+      "context": "Montréal . 2024"
+    }
+  ]
 }
