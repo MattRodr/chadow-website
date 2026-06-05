@@ -1,9 +1,29 @@
 {
   "gallery": [
-    { "src": "/images/home/choses-sauvages-club-soda-2025.jpg", "alt": "Crowd surfing — Choses Sauvages", "context": "Choses Sauvages · Club Soda" },
-    { "src": "/images/home/hologramme-sat-2025.jpg", "alt": "Hologramme en live au SAT", "context": "Hologramme · SAT" },
-    { "src": "/images/home/fakear-fairmount-2024.jpg", "alt": "Fakear au Fairmount", "context": "Fakear · Fairmount" },
-    { "src": "/images/home/elderbrook-mtelus-2025.jpg", "alt": "Elderbrook sur scène", "context": "Elderbrook · MTELUS" },
-    { "src": "/images/home/cirque-luzia-2025.jpg", "alt": "Cirque du Soleil — LUZIA", "context": "Cirque du Soleil · LUZIA" }
+    {
+      "src": "/images/uploads/DSC02845.jpg",
+      "alt": "Fredz - crowds - Metlus - montreal",
+      "context": "Fredz · Mtelus"
+    },
+    {
+      "src": "/images/uploads/DSC02221.jpg",
+      "alt": "Eric pridz - piknic electronique - dj - montreal",
+      "context": "Eric Pridz · Piknic Electronik"
+    },
+    {
+      "src": "/images/uploads/DSC00910.jpg",
+      "alt": "Cirque du Soleil - Echo - Montreal - 2026",
+      "context": "Cirque du soleil · Echo · Montréal"
+    },
+    {
+      "src": "/images/uploads/DSC01275.jpg",
+      "alt": "Solomun - dj - piknic electronik - montreal",
+      "context": "Solomun · Piknic Electronik"
+    },
+    {
+      "src": "/images/uploads/DSC00146-2.jpg",
+      "alt": "The Fray - Mtelus - Montreal",
+      "context": "The Fray · Mtelus"
+    }
   ]
 }
