@@ -1,9 +1,29 @@
 {
   "photos": [
-    { "src": "/images/work/super-plage-francos-2025.jpg", "title": "Super Plage", "context": "Francos · Juin 2025" },
-    { "src": "/images/home/choses-sauvages-club-soda-2025.jpg", "title": "Choses Sauvages", "context": "Club Soda · Avril 2025" },
-    { "src": "/images/home/elderbrook-mtelus-2025.jpg", "title": "Elderbrook", "context": "MTELUS · Avril 2025" },
-    { "src": "/images/work/backwash-sat-2025.jpg", "title": "Backwash", "context": "SAT · Avril 2025" },
-    { "src": "/images/home/cirque-luzia-2025.jpg", "title": "Cirque du Soleil — LUZIA", "context": "Mai 2025" }
+    {
+      "src": "/images/work/super-plage-francos-2025.jpg",
+      "title": "Super Plage",
+      "context": "Francos · Juin 2025"
+    },
+    {
+      "src": "/images/uploads/CHOSES SAUVAGES - CLUB SODA - Avril 2025(2).jpg",
+      "title": "Choses Sauvages",
+      "context": "Club Soda · Avril 2025"
+    },
+    {
+      "src": "/images/uploads/ELDERBROOK- MTELUS - Avril 2025 (2).jpg",
+      "title": "Elderbrook",
+      "context": "MTELUS · Avril 2025"
+    },
+    {
+      "src": "/images/uploads/BACKWASH - SAT - Avril 2025.jpg",
+      "title": "Backwash",
+      "context": "SAT · Avril 2025"
+    },
+    {
+      "src": "/images/uploads/JAMES BAY - MTELUS - Mai 2025 (1).jpg",
+      "title": "James Bay — Mtelus",
+      "context": "Mai 2025"
+    }
   ]
 }
