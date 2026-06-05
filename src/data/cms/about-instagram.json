@@ -1,8 +1,20 @@
 {
   "mosaic": [
-    { "src": "/images/home/choses-sauvages-club-soda-2025.jpg", "alt": "Crowd surfing — Choses Sauvages" },
-    { "src": "/images/home/elderbrook-mtelus-2025.jpg", "alt": "Elderbrook sur scène" },
-    { "src": "/images/home/hologramme-sat-2025.jpg", "alt": "Hologramme en live au SAT" },
-    { "src": "/images/home/fakear-fairmount-2024.jpg", "alt": "Fakear au Fairmount" }
+    {
+      "src": "/images/uploads/DSC00910.jpg",
+      "alt": "Cirque du soleil - echo - montreal"
+    },
+    {
+      "src": "/images/uploads/DSC07536.jpg",
+      "alt": "Foule et crowd de l'igloofest"
+    },
+    {
+      "src": "/images/uploads/DSC08938.jpg",
+      "alt": "Madeon a l'igloofest montreal"
+    },
+    {
+      "src": "/images/uploads/DSC08920-2.jpg",
+      "alt": "Madeon a l'igloofest montreal"
+    }
   ]
 }
