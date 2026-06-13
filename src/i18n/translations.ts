@@ -18,6 +18,7 @@ export const translations = {
       home: "Home",
       about: "About",
       work: "Work",
+      video: "Video",
       services: "Services",
       contact: "Contact",
     },
@@ -135,13 +136,54 @@ export const translations = {
     about: {
       eyebrow: "About me",
       title: "I'm Ambre",
-      paragraphs: [
+      subtitle: "Documentary, Music & Event Photographer based in Montreal",
+      spotifyLabel: "Spotify",
+      // Short teaser shown on the HOMEPAGE only (kept distinct from the About page copy).
+      teaserParagraphs: [
         "An event & music photographer based in Montréal.",
         "I document what people feel — not just what they see.",
         "My approach is instinctive and immersive. I stay close to the moment, capturing energy as it unfolds — without staging or forcing anything.",
       ],
+      intro: [
+        "I photograph energy.",
+        "Not performances. Not poses.",
+        "My work exists somewhere between documentary photography and live event experience.",
+        "Whether I'm capturing an artist on stage, a crowd lost in the music, or a fleeting moment backstage, my goal is always the same: to translate energy into imagery.",
+      ],
+      linkedinLabel: "Ambre Bangoura on LinkedIn",
+      carouselHint: "View more",
+      story: {
+        label: "My Story",
+        lead: [
+          "I'm a photographer based in Montreal and working wherever the moment takes me.",
+          "I move naturally between music, comedy, and cultural events, drawn to spaces where energy is raw, spontaneous, and real.",
+        ],
+        tagline: "Chadow — the shadow of your moments.",
+        taglineSub: "Chadow is my way of being present without taking over. The quiet eye behind your project.",
+        body: [
+          "Photography started as curiosity — a way to explore, to remember, meet people, and experience different worlds. It quickly became a language: a way to capture not just how things look, but how they feel.",
+          "Through my work, I aim to capture the authenticity of your events, to reflect emotion, movement, and connection, and to preserve the memory of something that only existed for a moment.",
+          "Today, I collaborate with artists, festivals, brands, and cultural events to create images that feel authentic, immersive, and alive.",
+        ],
+      },
       workedWithLabel: "Worked with",
       workedWithSuffix: "and many others.",
+      soundtrack: {
+        label: "Soundtrack",
+        paragraphs: [
+          "Music deeply influences the way I photograph.",
+          "Here's a selection of artists I've had the chance to shoot along the way.",
+        ],
+        cta: "Listen to my playlist",
+      },
+    },
+
+    video: {
+      eyebrow: "Video",
+      title: ["Energy", "in motion."],
+      lead: "Recaps, promos and behind-the-scenes films — the same energy, now moving.",
+      empty: "New videos coming soon.",
+      watch: "Play video",
     },
 
     approach: {
@@ -218,6 +260,7 @@ export const translations = {
       home: "Accueil",
       about: "À propos",
       work: "Projets",
+      video: "Vidéo",
       services: "Services",
       contact: "Contact",
     },
@@ -335,13 +378,54 @@ export const translations = {
     about: {
       eyebrow: "À propos",
       title: "Je suis Ambre",
-      paragraphs: [
+      subtitle: "Photographe documentaire, musicale & événementielle basée à Montréal",
+      spotifyLabel: "Spotify",
+      // Court teaser affiché uniquement sur la PAGE D'ACCUEIL (distinct du texte de la page À propos).
+      teaserParagraphs: [
         "Photographe événementielle & musicale basée à Montréal.",
         "Je documente ce que les gens ressentent — pas seulement ce qu'ils voient.",
         "Mon approche est instinctive et immersive. Je reste proche du moment, captant l'énergie telle qu'elle se déploie — sans mise en scène, sans rien forcer.",
       ],
+      intro: [
+        "Je photographie l'énergie.",
+        "Pas les performances. Pas les poses.",
+        "Mon travail se situe quelque part entre la photographie documentaire et l'expérience d'un événement live.",
+        "Qu'il s'agisse d'un artiste sur scène, d'une foule emportée par la musique ou d'un instant furtif en coulisses, mon objectif reste le même : traduire l'énergie en images.",
+      ],
+      linkedinLabel: "Ambre Bangoura sur LinkedIn",
+      carouselHint: "Voir plus",
+      story: {
+        label: "Mon parcours",
+        lead: [
+          "Je suis photographe basée à Montréal, et je travaille partout où le moment m'emmène.",
+          "Je navigue naturellement entre musique, humour et événements culturels, attirée par les espaces où l'énergie est brute, spontanée et vraie.",
+        ],
+        tagline: "Chadow — l'ombre de vos moments.",
+        taglineSub: "Chadow, c'est ma façon d'être présente sans prendre le dessus. L'œil discret derrière votre projet.",
+        body: [
+          "La photographie a commencé comme une curiosité — une manière d'explorer, de me souvenir, de rencontrer des gens et de vivre d'autres mondes. C'est vite devenu un langage : une façon de capter non pas seulement à quoi les choses ressemblent, mais ce qu'elles font ressentir.",
+          "À travers mon travail, je cherche à capter l'authenticité de vos événements, à refléter l'émotion, le mouvement et la connexion, et à préserver le souvenir de ce qui n'a existé qu'un instant.",
+          "Aujourd'hui, je collabore avec des artistes, des festivals, des marques et des événements culturels pour créer des images authentiques, immersives et vivantes.",
+        ],
+      },
       workedWithLabel: "Ils m'ont fait confiance",
       workedWithSuffix: "et beaucoup d'autres.",
+      soundtrack: {
+        label: "Bande-son",
+        paragraphs: [
+          "La musique influence profondément ma façon de photographier.",
+          "Voici une sélection d'artistes que j'ai eu la chance de shooter en chemin.",
+        ],
+        cta: "Écouter ma playlist",
+      },
+    },
+
+    video: {
+      eyebrow: "Vidéo",
+      title: ["L'énergie", "en mouvement."],
+      lead: "Recaps, promos et coulisses — la même énergie, désormais en mouvement.",
+      empty: "Nouvelles vidéos bientôt en ligne.",
+      watch: "Lire la vidéo",
     },
 
     approach: {

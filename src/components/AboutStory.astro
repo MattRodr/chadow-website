@@ -1,0 +1,80 @@
+---
+import { workedWith } from "../data/site";
+import { getLang, getT } from "../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+const s = t.about.story;
+---
+<div class="story">
+  <div class="story__lead" data-reveal>
+    {s.lead.map((p) => <p>{p}</p>)}
+  </div>
+
+  <div class="story__tagline" data-reveal data-reveal-delay="80">
+    <p class="story__tagline-main">{s.tagline}</p>
+    <p class="story__tagline-sub">{s.taglineSub}</p>
+  </div>
+
+  <div class="story__body" data-reveal data-reveal-delay="120">
+    {s.body.map((p) => <p>{p}</p>)}
+  </div>
+
+  <div class="story__worked" data-reveal data-reveal-delay="160">
+    <p class="eyebrow eyebrow--small">{t.about.workedWithLabel}</p>
+    <p class="story__brands">
+      {workedWith.join(" · ")}<br />
+      {t.about.workedWithSuffix}
+    </p>
+  </div>
+</div>
+
+<style>
+  .story { max-width: 760px; display: flex; flex-direction: column; gap: 28px; }
+
+  .story__lead { display: flex; flex-direction: column; gap: 12px; }
+  .story__lead p {
+    margin: 0;
+    font-size: clamp(17px, 2vw, 21px);
+    line-height: 1.5;
+    color: var(--color-text);
+  }
+
+  .story__tagline {
+    padding: 22px 26px;
+    border-left: 2px solid var(--color-border-strong);
+    background: var(--color-bg-card);
+    border-radius: var(--radius-sm);
+  }
+  .story__tagline-main {
+    margin: 0 0 8px;
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 34px);
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+  .story__tagline-sub { margin: 0; font-size: 15px; line-height: 1.6; color: var(--color-text-dim); }
+
+  .story__body { display: flex; flex-direction: column; gap: 16px; }
+  .story__body p { margin: 0; font-size: 15px; line-height: 1.75; color: var(--color-text-dim); }
+
+  .story__worked {
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 20px 0 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    margin: 0;
+  }
+  .eyebrow--small { font-size: 10px; }
+  .story__brands { margin: 0; font-size: 14px; color: var(--color-text-dim); line-height: 1.7; }
+
+  @media (max-width: 760px) {
+    .story__body p { font-size: 16px; }
+    .story__brands { font-size: 16px; }
+  }
+</style>

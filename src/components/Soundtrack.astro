@@ -1,0 +1,52 @@
+---
+import { site } from "../data/site";
+import { getLang, getT } from "../i18n/utils";
+const lang = getLang(Astro);
+const t = getT(lang);
+const s = t.about.soundtrack;
+---
+<div class="soundtrack">
+  <div class="soundtrack__text" data-reveal>
+    {s.paragraphs.map((p) => <p>{p}</p>)}
+  </div>
+
+  <a class="soundtrack__cta" href={site.spotifyPlaylist} target="_blank" rel="noopener" data-reveal data-reveal-delay="80">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.586 14.424a.623.623 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 1 1-.277-1.215c3.809-.871 7.077-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 1 1-.452-1.493c3.632-1.102 8.147-.568 11.232 1.328a.78.78 0 0 1 .257 1.073zm.105-2.835C14.692 8.95 9.375 8.775 6.298 9.71a.935.935 0 1 1-.542-1.79c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 0 1-.956 1.61z"/>
+    </svg>
+    <span>{s.cta}</span>
+    <svg class="soundtrack__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+    </svg>
+  </a>
+</div>
+
+<style>
+  .soundtrack { display: flex; flex-direction: column; gap: 24px; max-width: 620px; }
+  .soundtrack__text { display: flex; flex-direction: column; gap: 10px; }
+  .soundtrack__text p { margin: 0; font-size: 15px; line-height: 1.7; color: var(--color-text-dim); }
+  .soundtrack__text p:first-child { color: var(--color-text); font-size: 16px; }
+
+  .soundtrack__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    width: max-content;
+    padding: 14px 22px;
+    border-radius: 999px;
+    background: #1db954;
+    color: #0a0a0a;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    transition: transform var(--dur) var(--ease), filter var(--dur-fast) var(--ease);
+  }
+  .soundtrack__cta:hover { transform: translateY(-1px); filter: brightness(1.08); }
+  .soundtrack__arrow { transition: transform var(--dur) var(--ease); }
+  .soundtrack__cta:hover .soundtrack__arrow { transform: translate(2px, -2px); }
+
+  @media (max-width: 760px) {
+    .soundtrack__text p { font-size: 16px; }
+    .soundtrack__cta { padding: 16px 24px; font-size: 15px; }
+  }
+</style>

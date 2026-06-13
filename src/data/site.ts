@@ -5,10 +5,10 @@
  *  Les TEXTES traduisibles → voir src/i18n/translations.ts
  */
 
-import { homePhotos, recentPhotos, instagramMosaic, featuredImages, serviceImages, portfolioItems, portfolioSelectedItems, brandLogo } from "./photos";
+import { homePhotos, recentPhotos, instagramMosaic, aboutCarousel, featuredImages, serviceImages, portfolioItems, portfolioSelectedItems, videos, brandLogo } from "./photos";
 
 // Re-exports so components keep a single import surface.
-export { homePhotos, recentPhotos, instagramMosaic, featuredImages, portfolioItems, portfolioSelectedItems, brandLogo };
+export { homePhotos, recentPhotos, instagramMosaic, aboutCarousel, featuredImages, portfolioItems, portfolioSelectedItems, videos, brandLogo };
 
 export const site = {
   name: "CHADOW",
@@ -16,6 +16,12 @@ export const site = {
   email: "contact@chadow.photo",
   instagram: "https://www.instagram.com/chadow.photo/",
   instagramHandle: "@chadow.photo",
+  // LinkedIn pro (page Chadow) — affiché à côté d'Instagram sur tout le site.
+  linkedin: "https://www.linkedin.com/company/chadowphoto/",
+  // LinkedIn perso d'Ambre — affiché sur la page À propos.
+  linkedinPersonal: "https://www.linkedin.com/in/ambre-bangoura-b0371240a/",
+  // Playlist Spotify — page À propos (sous-titre + section Soundtrack).
+  spotifyPlaylist: "https://open.spotify.com/playlist/1L4IQYRz8F0OlcU7h68p3S?si=udQGHk1sRX_drjP8Ls_DGg",
   url: "https://chadow.photo",
   description: "Event & Music Photographer based in Montréal.",
   // Image affichée quand on partage le site (réseaux sociaux, iMessage…)

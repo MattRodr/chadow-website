@@ -92,6 +92,42 @@ collections:
               - { name: "src", label: "Photo", widget: "image" }
               - { name: "alt", label: "Description (accessibilité)", widget: "string", hint: "Décris brièvement la photo" }
 
+      - name: "carrousel"
+        label: "Carrousel « En train de shooter »"
+        file: "src/data/cms/about-carousel.json"
+        icon: "burst_mode"
+        description: "Photos d'Ambre en plein shooting. La 1ʳᵉ s'affiche sur la page À propos ; au clic, on peut feuilleter toutes les autres."
+        fields:
+          - name: "gallery"
+            label: "Photos"
+            label_singular: "Photo"
+            widget: "list"
+            summary: "{{fields.alt}}"
+            fields:
+              - { name: "src", label: "Photo", widget: "image" }
+              - { name: "alt", label: "Description (accessibilité)", widget: "string", hint: "Décris brièvement la photo" }
+
+  # ======================= VIDÉO =======================
+  - name: "video"
+    label: "🎬 Vidéo"
+    files:
+      - name: "videos"
+        label: "Galerie vidéo"
+        file: "src/data/cms/videos.json"
+        icon: "movie"
+        description: "Les vidéos de la page Vidéo. Colle un lien YouTube ou Vimeo ; la miniature YouTube est automatique. Pour Vimeo, ajoute une image d'aperçu."
+        fields:
+          - name: "videos"
+            label: "Vidéos"
+            label_singular: "Vidéo"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { name: "url", label: "Lien YouTube ou Vimeo", widget: "string", hint: "Ex : https://youtu.be/xxxx ou https://vimeo.com/123456789" }
+              - { name: "title", label: "Titre", widget: "string" }
+              - { name: "context", label: "Contexte (artiste · lieu · date)", widget: "string", required: false }
+              - { name: "poster", label: "Image d'aperçu (optionnel)", widget: "image", required: false, hint: "Recommandé pour Vimeo. Pour YouTube, laisse vide pour utiliser la miniature automatique." }
+
   # ======================= PORTFOLIO =======================
   - name: "portfolio"
     label: "🖼️ Portfolio"

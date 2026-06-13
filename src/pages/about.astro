@@ -2,7 +2,8 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/Section.astro";
 import AboutHeader from "../components/AboutHeader.astro";
-import ApproachBlock from "../components/ApproachBlock.astro";
+import AboutStory from "../components/AboutStory.astro";
+import Soundtrack from "../components/Soundtrack.astro";
 import KeyNumbers from "../components/KeyNumbers.astro";
 import InstagramTeaser from "../components/InstagramTeaser.astro";
 import FinalCTA from "../components/FinalCTA.astro";
@@ -15,8 +16,12 @@ const t = getT(lang);
     <AboutHeader />
   </Section>
 
-  <Section noBorder>
-    <ApproachBlock />
+  <Section title={t.about.story.label}>
+    <AboutStory />
+  </Section>
+
+  <Section title={t.about.soundtrack.label}>
+    <Soundtrack />
   </Section>
 
   <Section label={t.sections.keyNumbers.label} title={t.sections.keyNumbers.title}>

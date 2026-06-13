@@ -1,45 +1,102 @@
 ---
-import { workedWith, featuredImages } from "../data/site";
+import { site, aboutCarousel } from "../data/site";
+import { brandLogo } from "../data/photos";
 import { getLang, getT } from "../i18n/utils";
 const lang = getLang(Astro);
 const t = getT(lang);
+
+// Carrousel « Ambre en train de shooter » : la 1ʳᵉ photo s'affiche,
+// les autres sont des déclencheurs cachés du même groupe → le Lightbox
+// global permet de toutes les feuilleter au clic.
+const shots = aboutCarousel.length ? aboutCarousel : [];
+const hasMore = shots.length > 1;
 ---
 <div class="about-header">
-  <div class="about-header__content">
-    <p class="eyebrow">{t.about.eyebrow}</p>
-    <h1 class="about-header__title">{t.about.title}</h1>
-
-    <div class="about-header__text">
-      {t.about.paragraphs.map((p) => <p>{p}</p>)}
-    </div>
-
-    <div class="about-header__worked">
-      <p class="eyebrow eyebrow--small">{t.about.workedWithLabel}</p>
-      <p class="about-header__brands">
-        {workedWith.join(" · ")}<br />
-        {t.about.workedWithSuffix}
-      </p>
-    </div>
+  <div class="about-header__logo">
+    <img src={brandLogo} alt={`${site.name} logo`} loading="eager" decoding="sync" />
   </div>
 
-  <figure class="about-header__media">
-    <img src={featuredImages.aboutPortrait} alt="Ambre Bangoura at work — Montreal" loading="eager" />
-  </figure>
+  <div class="about-header__grid">
+    <div class="about-header__content">
+      <p class="eyebrow">{t.about.eyebrow}</p>
+      <h1 class="about-header__title">{t.about.title}</h1>
+      <p class="about-header__subtitle">{t.about.subtitle}</p>
+
+      <a class="about-header__spotify" href={site.spotifyPlaylist} target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.586 14.424a.623.623 0 0 1-.857.207c-2.348-1.435-5.304-1.76-8.785-.964a.622.622 0 1 1-.277-1.215c3.809-.871 7.077-.496 9.712 1.115a.623.623 0 0 1 .207.857zm1.223-2.722a.78.78 0 0 1-1.072.257c-2.687-1.652-6.785-2.131-9.965-1.166a.78.78 0 1 1-.452-1.493c3.632-1.102 8.147-.568 11.232 1.328a.78.78 0 0 1 .257 1.073zm.105-2.835C14.692 8.95 9.375 8.775 6.298 9.71a.935.935 0 1 1-.542-1.79c3.532-1.072 9.404-.865 13.115 1.338a.936.936 0 0 1-.956 1.61z"/>
+        </svg>
+        <span>{t.about.spotifyLabel}</span>
+      </a>
+
+      <div class="about-header__text">
+        {t.about.intro.map((p) => <p>{p}</p>)}
+      </div>
+
+      {site.linkedinPersonal && (
+        <a class="about-header__linkedin" href={site.linkedinPersonal} target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.85V21H9z"/>
+          </svg>
+          <span>{t.about.linkedinLabel}</span>
+        </a>
+      )}
+    </div>
+
+    {shots.length > 0 && (
+      <div class="about-header__media">
+        <figure
+          class="about-header__shot"
+          data-lightbox-trigger
+          data-lightbox-group="about-shooting"
+          data-lightbox-caption={shots[0].context || shots[0].alt}
+        >
+          <img src={shots[0].src} alt={shots[0].alt} loading="eager" />
+          {hasMore && (
+            <figcaption class="about-header__shot-hint">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M21 14v7H3V3h7"/>
+              </svg>
+              <span>{t.about.carouselHint} · {shots.length}</span>
+            </figcaption>
+          )}
+        </figure>
+        {/* Déclencheurs cachés : alimentent le carrousel du Lightbox */}
+        {hasMore && shots.slice(1).map((s) => (
+          <figure
+            class="about-header__shot-hidden"
+            data-lightbox-trigger
+            data-lightbox-group="about-shooting"
+            data-lightbox-caption={s.context || s.alt}
+            aria-hidden="true"
+          >
+            <img src={s.src} alt={s.alt} loading="lazy" />
+          </figure>
+        ))}
+      </div>
+    )}
+  </div>
 </div>
 
 <style>
-  .about-header {
+  .about-header { display: flex; flex-direction: column; gap: clamp(28px, 4vw, 48px); }
+
+  .about-header__logo { display: flex; justify-content: center; }
+  .about-header__logo img {
+    width: clamp(120px, 18vw, 200px);
+    height: auto;
+    /* Logo sombre → blanc sur fond noir (même traitement que le composant Logo). */
+    filter: invert(1) hue-rotate(180deg);
+  }
+
+  .about-header__grid {
     display: grid;
-    /* Colonne texte calée sur son contenu (≤560px), photo dans le reste.
-       Empêche le grand vide au milieu sur écran large. */
     grid-template-columns: minmax(0, 560px) minmax(0, 1fr);
     gap: clamp(28px, 5vw, 72px);
     align-items: center;
-    padding: 16px 0 8px;
-    /* Garde le texte et la photo groupés (pas d'écartement sur grand écran) */
     max-width: 1160px;
   }
-  .about-header__content { display: flex; flex-direction: column; gap: 28px; max-width: 560px; }
+  .about-header__content { display: flex; flex-direction: column; gap: 22px; max-width: 560px; }
 
   .eyebrow {
     font-size: 11px;
@@ -48,7 +105,6 @@ const t = getT(lang);
     color: var(--color-text-mute);
     margin: 0;
   }
-  .eyebrow--small { font-size: 10px; }
 
   .about-header__title {
     font-family: var(--font-display);
@@ -58,44 +114,95 @@ const t = getT(lang);
     margin: 0;
     text-transform: uppercase;
   }
+  .about-header__subtitle {
+    margin: -8px 0 0;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--color-text-dim);
+  }
+
+  .about-header__spotify,
+  .about-header__linkedin {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: max-content;
+    padding: 9px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--color-text-dim);
+    transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+  }
+  .about-header__spotify svg { color: #1db954; }
+  .about-header__spotify:hover,
+  .about-header__linkedin:hover {
+    color: var(--color-text);
+    border-color: var(--color-border-strong);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .about-header__linkedin svg { color: #0a66c2; }
 
   .about-header__text { display: flex; flex-direction: column; gap: 14px; color: var(--color-text-dim); line-height: 1.7; font-size: 15px; }
   .about-header__text p { margin: 0; }
-
-  .about-header__worked {
-    display: flex; flex-direction: column; gap: 10px;
-    padding: 18px 0;
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+  .about-header__text p:first-child {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2.6vw, 30px);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--color-text);
   }
-  .about-header__brands { margin: 0; font-size: 14px; color: var(--color-text-dim); line-height: 1.7; }
 
-  .about-header__media {
+  .about-header__media { margin: 0; }
+  .about-header__shot {
+    position: relative;
     margin: 0;
     max-width: 500px;
-    justify-self: start; /* près du texte, pas collé au bord droit */
     width: 100%;
     aspect-ratio: 3 / 4;
     border-radius: var(--radius);
     overflow: hidden;
     background: #0e0e0e;
+    cursor: zoom-in;
   }
-  .about-header__media img {
+  .about-header__shot img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 1200ms cubic-bezier(.2,.7,.2,1);
   }
+  .about-header__shot:hover img { transform: scale(1.04); }
+  .about-header__shot-hint {
+    position: absolute;
+    left: 14px; bottom: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .about-header__shot-hidden { display: none; }
 
   @media (max-width: 900px) {
-    .about-header { grid-template-columns: 1fr; gap: 28px; }
-    .about-header__media { order: -1; max-width: 100%; justify-self: stretch; }
+    .about-header__grid { grid-template-columns: 1fr; gap: 28px; }
+    .about-header__media { order: -1; }
+    .about-header__shot { max-width: 100%; }
   }
   @media (max-width: 760px) {
     .about-header__title { font-size: clamp(64px, 18vw, 96px); }
     .about-header .eyebrow { font-size: 13px; letter-spacing: 0.28em; }
+    .about-header__subtitle { font-size: 15px; }
     .about-header__text { font-size: 17px; line-height: 1.75; gap: 16px; }
-    .about-header__brands { font-size: 16px; line-height: 1.7; }
-    .about-header__worked { padding: 22px 0; }
   }
 </style>

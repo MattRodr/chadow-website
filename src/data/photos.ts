@@ -29,6 +29,8 @@ import homeRecent from "./cms/home-recent.json";
 import homeSingles from "./cms/home-singles.json";
 import aboutData from "./cms/about.json";
 import aboutInstagram from "./cms/about-instagram.json";
+import aboutCarouselData from "./cms/about-carousel.json";
+import videosData from "./cms/videos.json";
 import contactData from "./cms/contact.json";
 import serviceData from "./cms/services.json";
 import portfolioSelected from "./cms/portfolio-selected.json";
@@ -53,6 +55,18 @@ export const recentPhotos: Photo[] = homeRecent.gallery;
 
 /* ---------- À PROPOS — mosaïque Instagram (4 photos) ---------- */
 export const instagramMosaic: Photo[] = aboutInstagram.mosaic;
+
+/* ---------- À PROPOS — carrousel « Ambre en train de shooter » ---------- */
+export const aboutCarousel: Photo[] = aboutCarouselData.gallery;
+
+/* ---------- VIDÉO — galerie de vidéos (YouTube / Vimeo) ---------- */
+export interface VideoItem {
+  url: string;
+  title: string;
+  context?: string;
+  poster?: string;
+}
+export const videos: VideoItem[] = videosData.videos;
 
 /* ---------- PHOTOS VEDETTES (assemblées depuis les pages) ---------- */
 export const featuredImages = {
