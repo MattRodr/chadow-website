@@ -33,7 +33,11 @@ const extraProps = href
   .btn {
     display: inline-flex;
     align-items: center;
-    gap: 18px;
+    /* Toujours épouser le contenu : ne pas s'étirer dans un parent flex/grid. */
+    align-self: start;
+    justify-self: start;
+    width: fit-content;
+    gap: 14px;
     padding: 16px 26px;
     border-radius: var(--radius-xs);
     font-size: 11px;
