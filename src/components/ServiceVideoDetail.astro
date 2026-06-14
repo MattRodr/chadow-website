@@ -1,0 +1,154 @@
+---
+import Button from "./Button.astro";
+import { loopEmbed } from "../utils/video";
+import { getLang, getT, localePath } from "../i18n/utils";
+
+const lang = getLang(Astro);
+const t = getT(lang);
+const lp = (p: string) => localePath(lang, p);
+
+interface Props {
+  index: number;
+  slug: keyof typeof t.services.items;
+  image: string;
+  video?: string;
+  ctaKey?: keyof typeof t.cta;
+}
+const { index, slug, image, video, ctaKey = "discussVideo" } = Astro.props;
+const item = t.services.items[slug];
+const num = String(index).padStart(2, "0");
+const v = loopEmbed(video);
+const ctaLabel = t.cta[ctaKey];
+---
+<article class="svd">
+  <figure class="svd__media" data-reveal="up">
+    {v?.provider === "file" ? (
+      <video src={v.src} poster={image} autoplay muted loop playsinline preload="metadata"></video>
+    ) : v ? (
+      <iframe src={v.embed} title={item.title} loading="lazy" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    ) : (
+      <img src={image} alt={item.title} loading="lazy" />
+    )}
+  </figure>
+
+  <div class="svd__grid" data-reveal data-reveal-delay="100">
+    <div class="svd__main">
+      <p class="svd__num">{num}</p>
+      <h3 class="svd__title">{item.title}</h3>
+      <p class="svd__lede">{item.description}</p>
+      <p class="svd__copy">{item.longDescription}</p>
+      <Button href={lp("/contact")}>{ctaLabel}</Button>
+    </div>
+
+    <div class="svd__meta">
+      <div>
+        <p class="svd__label">{t.services.whatsIncluded}</p>
+        <ul class="svd__list">
+          {item.deliverables.map((d) => (
+            <li>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>{d}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p class="svd__label">{t.services.bestFor}</p>
+        <p class="svd__bestfor">{item.bestFor}</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .svd {
+    padding: clamp(40px, 7vw, 88px) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* Vidéo cinématique pleine largeur */
+  .svd__media {
+    margin: 0 0 clamp(28px, 4vw, 48px);
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #0e0e0e;
+  }
+  .svd__media img,
+  .svd__media video,
+  .svd__media iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    object-fit: cover;
+  }
+
+  /* Détail en 2 colonnes équilibrées */
+  .svd__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: start;
+  }
+  .svd__main { display: flex; flex-direction: column; gap: 16px; max-width: 580px; }
+  .svd__num {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--color-text-mute);
+    margin: 0;
+    letter-spacing: 0.04em;
+  }
+  .svd__title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4vw, 56px);
+    line-height: 0.95;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+  }
+  .svd__lede { margin: 0; font-size: 16px; color: var(--color-text); line-height: 1.5; }
+  .svd__copy { margin: 0; font-size: 14px; color: var(--color-text-dim); line-height: 1.75; }
+
+  .svd__meta {
+    display: grid;
+    gap: 28px;
+    padding: 22px 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .svd__label {
+    font-size: 10px;
+    letter-spacing: var(--ls-extra);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+    margin: 0 0 10px;
+  }
+  .svd__list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+  .svd__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--color-text-dim);
+    line-height: 1.5;
+  }
+  .svd__list svg { color: var(--color-text); margin-top: 4px; flex-shrink: 0; }
+  .svd__bestfor { margin: 0; font-size: 13px; color: var(--color-text-dim); line-height: 1.6; }
+
+  @media (max-width: 900px) {
+    .svd__grid { grid-template-columns: 1fr; gap: 28px; }
+    .svd__list { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .svd__num { font-size: 26px; }
+    .svd__title { font-size: clamp(40px, 11vw, 56px); }
+    .svd__lede { font-size: 17px; line-height: 1.55; }
+    .svd__copy { font-size: 16px; line-height: 1.75; }
+    .svd__label { font-size: 12px; }
+    .svd__list li { font-size: 15px; }
+    .svd__bestfor { font-size: 15px; }
+  }
+</style>

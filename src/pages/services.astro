@@ -2,11 +2,16 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/Section.astro";
 import ServiceDetail from "../components/ServiceDetail.astro";
+import ServiceVideoDetail from "../components/ServiceVideoDetail.astro";
 import FinalCTA from "../components/FinalCTA.astro";
 import { services } from "../data/site";
 import { getLang, getT } from "../i18n/utils";
 const lang = getLang(Astro);
 const t = getT(lang);
+
+// Video Content : bloc vidéo dédié (pleine largeur) ; les autres en rangées.
+const photoServices = services.filter((s) => s.slug !== "video-content");
+const videoService = services.find((s) => s.slug === "video-content")!;
 ---
 <BaseLayout title={t.nav.services}>
   <Section noBorder>
@@ -19,16 +24,23 @@ const t = getT(lang);
     </header>
   </Section>
 
-  {services.map((service, i) => (
+  {photoServices.map((service, i) => (
     <ServiceDetail
       index={i + 1}
       slug={service.slug}
       image={service.detailImage}
-      video={(service as { video?: string }).video}
       ctaKey={service.ctaKey}
       reversed={i % 2 === 1}
     />
   ))}
+
+  <ServiceVideoDetail
+    index={photoServices.length + 1}
+    slug={videoService.slug}
+    image={videoService.detailImage}
+    video={(videoService as { video?: string }).video}
+    ctaKey={videoService.ctaKey}
+  />
 
   <Section size="lg">
     <FinalCTA />
