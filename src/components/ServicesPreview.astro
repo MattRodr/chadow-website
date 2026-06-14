@@ -1,6 +1,7 @@
 ---
 import { services } from "../data/site";
 import { getLang, getT, localePath } from "../i18n/utils";
+import { loopEmbed } from "../utils/video";
 
 const lang = getLang(Astro);
 const t = getT(lang);
@@ -9,13 +10,15 @@ const lp = (p: string) => localePath(lang, p);
 <ul class="services">
   {services.map((service, idx) => {
     const item = t.services.items[service.slug];
-    const video = (service as { video?: string }).video;
+    const v = loopEmbed((service as { video?: string }).video);
     return (
       <li class="service-card" data-reveal="up" data-reveal-delay={idx * 110}>
         <a href={`${lp("/work")}?filter=${service.workFilter}`} class="service-card__link" aria-label={`${item.title} — ${t.cta.viewProjects}`}>
-          <div class="service-card__media">
-            {video ? (
-              <video class="service-card__img" src={video} poster={service.cardImage} autoplay muted loop playsinline preload="metadata"></video>
+          <div class:list={["service-card__media", { "service-card__media--video": !!v }]}>
+            {v?.provider === "file" ? (
+              <video class="service-card__img" src={v.src} poster={service.cardImage} autoplay muted loop playsinline preload="metadata"></video>
+            ) : v ? (
+              <iframe class="service-card__embed" src={v.embed} title={item.title} loading="lazy" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
             ) : (
               <img src={service.cardImage} alt={item.title} loading="lazy" class="service-card__img" />
             )}
@@ -60,6 +63,16 @@ const lp = (p: string) => localePath(lang, p);
     aspect-ratio: 4 / 3;
     overflow: hidden;
     background: #0e0e0e;
+  }
+  /* Aperçu vidéo : la vignette passe en 16:9 pour épouser la vidéo. */
+  .service-card__media--video { aspect-ratio: 16 / 9; }
+  .service-card__embed {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    /* l'iframe ne capte pas le clic → la carte reste cliquable vers /work */
+    pointer-events: none;
   }
   .service-card__img {
     width: 100%;

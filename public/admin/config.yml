@@ -209,7 +209,7 @@ collections:
             fields:
               - { name: "card", label: "Vignette (aperçu accueil)", widget: "image" }
               - { name: "detail", label: "Grande image (page Services)", widget: "image" }
-              - { name: "video", label: "Aperçu vidéo en boucle (~5 s, optionnel)", widget: "file", required: false, media_library: { config: { max_file_size: 26214400 } }, hint: "Courte vidéo MP4 lue en boucle, sans son, sur l'accueil et la page Services. Laisse vide pour afficher l'image. Sert d'aperçu : garde-la légère (~5 s)." }
+              - { name: "video", label: "Lien vidéo (YouTube ou Vimeo)", widget: "string", required: false, hint: "Colle un lien YouTube ou Vimeo. La vidéo s'affiche en aperçu (muet, en boucle) sur l'accueil et la page Services. Laisse vide pour afficher l'image. Ex : https://youtu.be/xxxx" }
 
   # ======================= CONTACT =======================
   - name: "contact"
