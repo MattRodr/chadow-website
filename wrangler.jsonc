@@ -1,0 +1,8 @@
+{
+  "name": "chadow-website",
+  "account_id": "241e1f8ef72d3d412d2fecb4386c9bed",
+  "compatibility_date": "2026-06-05",
+  "assets": {
+    "directory": "./dist"
+  }
+}
