@@ -24,6 +24,7 @@ const t = getT(lang);
       index={i + 1}
       slug={service.slug}
       image={service.detailImage}
+      video={(service as { video?: string }).video}
       ctaKey={service.ctaKey}
       reversed={i % 2 === 1}
     />

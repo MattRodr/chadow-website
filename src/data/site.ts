@@ -5,10 +5,10 @@
  *  Les TEXTES traduisibles → voir src/i18n/translations.ts
  */
 
-import { homePhotos, recentPhotos, instagramMosaic, aboutCarousel, featuredImages, serviceImages, portfolioItems, portfolioSelectedItems, videos, brandLogo } from "./photos";
+import { homePhotos, recentPhotos, instagramMosaic, aboutCarousel, featuredImages, serviceImages, portfolioItems, portfolioSelectedItems, brandLogo } from "./photos";
 
 // Re-exports so components keep a single import surface.
-export { homePhotos, recentPhotos, instagramMosaic, aboutCarousel, featuredImages, portfolioItems, portfolioSelectedItems, videos, brandLogo };
+export { homePhotos, recentPhotos, instagramMosaic, aboutCarousel, featuredImages, portfolioItems, portfolioSelectedItems, brandLogo };
 
 export const site = {
   name: "CHADOW",
@@ -77,6 +77,8 @@ export const services = [
     ctaKey: "discussVideo",
     cardImage:   serviceImages["video-content"].card,
     detailImage: serviceImages["video-content"].detail,
+    // Courte vidéo en boucle (~5 s) gérée depuis l'admin ; vide → affiche l'image.
+    video:       serviceImages["video-content"].video,
   },
 ] as const;
 

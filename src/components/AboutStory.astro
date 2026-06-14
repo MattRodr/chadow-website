@@ -6,75 +6,161 @@ const t = getT(lang);
 const s = t.about.story;
 ---
 <div class="story">
+  <!-- Accroche : grande, posée -->
   <div class="story__lead" data-reveal>
     {s.lead.map((p) => <p>{p}</p>)}
   </div>
 
-  <div class="story__tagline" data-reveal data-reveal-delay="80">
-    <p class="story__tagline-main">{s.tagline}</p>
-    <p class="story__tagline-sub">{s.taglineSub}</p>
-  </div>
+  <!-- Signature de marque : grande citation pleine largeur -->
+  <figure class="story__statement" data-reveal data-reveal-delay="80">
+    <span class="story__statement-index" aria-hidden="true">Chadow</span>
+    <blockquote class="story__statement-quote">{s.tagline}</blockquote>
+    <figcaption class="story__statement-sub">{s.taglineSub}</figcaption>
+  </figure>
 
+  <!-- Corps : mise en page éditoriale en colonnes -->
   <div class="story__body" data-reveal data-reveal-delay="120">
     {s.body.map((p) => <p>{p}</p>)}
   </div>
 
+  <!-- Ils m'ont fait confiance -->
   <div class="story__worked" data-reveal data-reveal-delay="160">
-    <p class="eyebrow eyebrow--small">{t.about.workedWithLabel}</p>
+    <p class="story__worked-label">{t.about.workedWithLabel}</p>
     <p class="story__brands">
       {workedWith.join(" · ")}<br />
-      {t.about.workedWithSuffix}
+      <span class="story__brands-suffix">{t.about.workedWithSuffix}</span>
     </p>
   </div>
 </div>
 
 <style>
-  .story { max-width: 760px; display: flex; flex-direction: column; gap: 28px; }
+  .story {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(40px, 6vw, 80px);
+  }
 
-  .story__lead { display: flex; flex-direction: column; gap: 12px; }
+  /* --- Accroche --- */
+  .story__lead {
+    max-width: 22ch;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
   .story__lead p {
     margin: 0;
-    font-size: clamp(17px, 2vw, 21px);
-    line-height: 1.5;
-    color: var(--color-text);
-  }
-
-  .story__tagline {
-    padding: 22px 26px;
-    border-left: 2px solid var(--color-border-strong);
-    background: var(--color-bg-card);
-    border-radius: var(--radius-sm);
-  }
-  .story__tagline-main {
-    margin: 0 0 8px;
     font-family: var(--font-display);
-    font-size: clamp(22px, 3vw, 34px);
-    line-height: 1;
+    font-size: clamp(26px, 3.6vw, 46px);
+    line-height: 1.02;
     letter-spacing: 0.01em;
     text-transform: uppercase;
   }
-  .story__tagline-sub { margin: 0; font-size: 15px; line-height: 1.6; color: var(--color-text-dim); }
+  .story__lead p + p { color: var(--color-text-dim); }
 
-  .story__body { display: flex; flex-direction: column; gap: 16px; }
-  .story__body p { margin: 0; font-size: 15px; line-height: 1.75; color: var(--color-text-dim); }
+  /* --- Citation signature --- */
+  .story__statement {
+    position: relative;
+    margin: 0;
+    padding: clamp(28px, 5vw, 56px) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    isolation: isolate;
+    overflow: hidden;
+  }
+  /* Mot fantôme en filigrane */
+  .story__statement-index {
+    position: absolute;
+    right: -2%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-display);
+    font-size: clamp(120px, 22vw, 320px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+    opacity: 0.04;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: -1;
+    white-space: nowrap;
+  }
+  .story__statement-quote {
+    margin: 0;
+    max-width: 16ch;
+    font-family: var(--font-display);
+    font-size: clamp(40px, 7vw, 96px);
+    line-height: 0.92;
+    letter-spacing: 0.005em;
+    text-transform: uppercase;
+  }
+  .story__statement-sub {
+    margin: 22px 0 0;
+    max-width: 46ch;
+    font-size: clamp(15px, 1.5vw, 17px);
+    line-height: 1.7;
+    color: var(--color-text-dim);
+  }
 
+  /* --- Corps éditorial en colonnes --- */
+  .story__body {
+    columns: 2;
+    column-gap: clamp(28px, 4vw, 56px);
+    max-width: 980px;
+  }
+  .story__body p {
+    margin: 0 0 18px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--color-text-dim);
+    break-inside: avoid;
+  }
+  /* Lettrine sur le tout premier paragraphe du corps */
+  .story__body p:first-child::first-letter {
+    font-family: var(--font-display);
+    font-size: 3.1em;
+    line-height: 0.8;
+    float: left;
+    margin: 6px 10px 0 0;
+    color: var(--color-text);
+    text-transform: uppercase;
+  }
+
+  /* --- Confiance --- */
   .story__worked {
-    display: flex; flex-direction: column; gap: 10px;
-    padding: 20px 0 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    gap: clamp(16px, 4vw, 48px);
+    padding-top: 28px;
     border-top: 1px solid var(--color-border);
   }
-  .eyebrow {
-    font-size: 11px;
+  .story__worked-label {
+    margin: 0;
+    font-size: 10px;
     letter-spacing: var(--ls-extra);
     text-transform: uppercase;
     color: var(--color-text-mute);
-    margin: 0;
+    white-space: nowrap;
   }
-  .eyebrow--small { font-size: 10px; }
-  .story__brands { margin: 0; font-size: 14px; color: var(--color-text-dim); line-height: 1.7; }
+  .story__brands {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(18px, 2.2vw, 26px);
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .story__brands-suffix {
+    font-family: var(--font-body);
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-text-mute);
+  }
 
   @media (max-width: 760px) {
-    .story__body p { font-size: 16px; }
-    .story__brands { font-size: 16px; }
+    .story__body { columns: 1; }
+    .story__lead { max-width: none; }
+    .story__worked { grid-template-columns: 1fr; gap: 10px; }
   }
 </style>

@@ -30,7 +30,6 @@ import homeSingles from "./cms/home-singles.json";
 import aboutData from "./cms/about.json";
 import aboutInstagram from "./cms/about-instagram.json";
 import aboutCarouselData from "./cms/about-carousel.json";
-import videosData from "./cms/videos.json";
 import contactData from "./cms/contact.json";
 import serviceData from "./cms/services.json";
 import portfolioSelected from "./cms/portfolio-selected.json";
@@ -59,21 +58,12 @@ export const instagramMosaic: Photo[] = aboutInstagram.mosaic;
 /* ---------- À PROPOS — carrousel « Ambre en train de shooter » ---------- */
 export const aboutCarousel: Photo[] = aboutCarouselData.gallery;
 
-/* ---------- VIDÉO — galerie de vidéos (YouTube / Vimeo) ---------- */
-export interface VideoItem {
-  url: string;
-  title: string;
-  context?: string;
-  poster?: string;
-}
-export const videos: VideoItem[] = videosData.videos;
-
 /* ---------- PHOTOS VEDETTES (assemblées depuis les pages) ---------- */
 export const featuredImages = {
-  aboutTeaser:   homeSingles.teaser, // Accueil — bloc "I'm Ambre"
-  approach:      homeSingles.quote,  // Accueil + À propos — citation "No staging"
-  aboutPortrait: aboutData.portrait, // À propos — grand portrait
-  contact:       contactData.image,  // Contact — photo du formulaire
+  aboutTeaser:   homeSingles.teaser,     // Accueil — bloc "I'm Ambre"
+  approach:      homeSingles.quote,      // Accueil — citation "No staging"
+  soundtrackBg:  aboutData.soundtrackBg, // À propos — fond de la section Soundtrack
+  contact:       contactData.image,      // Contact — photo du formulaire
 };
 
 /* ---------- SERVICES — 2 images par service ---------- */

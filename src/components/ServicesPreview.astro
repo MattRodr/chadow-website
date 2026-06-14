@@ -9,11 +9,16 @@ const lp = (p: string) => localePath(lang, p);
 <ul class="services">
   {services.map((service, idx) => {
     const item = t.services.items[service.slug];
+    const video = (service as { video?: string }).video;
     return (
       <li class="service-card" data-reveal="up" data-reveal-delay={idx * 110}>
         <a href={`${lp("/work")}?filter=${service.workFilter}`} class="service-card__link" aria-label={`${item.title} — ${t.cta.viewProjects}`}>
           <div class="service-card__media">
-            <img src={service.cardImage} alt={item.title} loading="lazy" class="service-card__img" />
+            {video ? (
+              <video class="service-card__img" src={video} poster={service.cardImage} autoplay muted loop playsinline preload="metadata"></video>
+            ) : (
+              <img src={service.cardImage} alt={item.title} loading="lazy" class="service-card__img" />
+            )}
           </div>
           <div class="service-card__body">
             <h3 class="service-card__title">{item.title}</h3>

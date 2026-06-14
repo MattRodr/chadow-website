@@ -18,7 +18,6 @@ export const translations = {
       home: "Home",
       about: "About",
       work: "Work",
-      video: "Video",
       services: "Services",
       contact: "Contact",
     },
@@ -178,13 +177,6 @@ export const translations = {
       },
     },
 
-    video: {
-      eyebrow: "Video",
-      title: ["Energy", "in motion."],
-      lead: "Recaps, promos and behind-the-scenes films — the same energy, now moving.",
-      empty: "New videos coming soon.",
-      watch: "Play video",
-    },
 
     approach: {
       label: "Approach",
@@ -260,7 +252,6 @@ export const translations = {
       home: "Accueil",
       about: "À propos",
       work: "Projets",
-      video: "Vidéo",
       services: "Services",
       contact: "Contact",
     },
@@ -420,13 +411,6 @@ export const translations = {
       },
     },
 
-    video: {
-      eyebrow: "Vidéo",
-      title: ["L'énergie", "en mouvement."],
-      lead: "Recaps, promos et coulisses — la même énergie, désormais en mouvement.",
-      empty: "Nouvelles vidéos bientôt en ligne.",
-      watch: "Lire la vidéo",
-    },
 
     approach: {
       label: "Approche",

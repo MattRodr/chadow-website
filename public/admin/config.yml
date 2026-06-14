@@ -67,13 +67,13 @@ collections:
   - name: "apropos"
     label: "👤 À propos"
     files:
-      - name: "portrait"
-        label: "Portrait"
+      - name: "soundtrack-bg"
+        label: "Fond section Soundtrack"
         file: "src/data/cms/about.json"
-        icon: "person"
-        description: "Le grand portrait en haut de la page À propos."
+        icon: "music_note"
+        description: "Photo en fond de la section « Soundtrack » (pleine largeur) sur la page À propos."
         fields:
-          - { name: "portrait", label: "Portrait d'Ambre", widget: "image" }
+          - { name: "soundtrackBg", label: "Image de fond", widget: "image" }
 
       - name: "instagram"
         label: "Mosaïque Instagram"
@@ -106,27 +106,6 @@ collections:
             fields:
               - { name: "src", label: "Photo", widget: "image" }
               - { name: "alt", label: "Description (accessibilité)", widget: "string", hint: "Décris brièvement la photo" }
-
-  # ======================= VIDÉO =======================
-  - name: "video"
-    label: "🎬 Vidéo"
-    files:
-      - name: "videos"
-        label: "Galerie vidéo"
-        file: "src/data/cms/videos.json"
-        icon: "movie"
-        description: "Les vidéos de la page Vidéo. Colle un lien YouTube ou Vimeo ; la miniature YouTube est automatique. Pour Vimeo, ajoute une image d'aperçu."
-        fields:
-          - name: "videos"
-            label: "Vidéos"
-            label_singular: "Vidéo"
-            widget: "list"
-            summary: "{{fields.title}}"
-            fields:
-              - { name: "url", label: "Lien YouTube ou Vimeo", widget: "string", hint: "Ex : https://youtu.be/xxxx ou https://vimeo.com/123456789" }
-              - { name: "title", label: "Titre", widget: "string" }
-              - { name: "context", label: "Contexte (artiste · lieu · date)", widget: "string", required: false }
-              - { name: "poster", label: "Image d'aperçu (optionnel)", widget: "image", required: false, hint: "Recommandé pour Vimeo. Pour YouTube, laisse vide pour utiliser la miniature automatique." }
 
   # ======================= PORTFOLIO =======================
   - name: "portfolio"
@@ -230,6 +209,7 @@ collections:
             fields:
               - { name: "card", label: "Vignette (aperçu accueil)", widget: "image" }
               - { name: "detail", label: "Grande image (page Services)", widget: "image" }
+              - { name: "video", label: "Aperçu vidéo en boucle (~5 s, optionnel)", widget: "file", required: false, media_library: { config: { max_file_size: 26214400 } }, hint: "Courte vidéo MP4 lue en boucle, sans son, sur l'accueil et la page Services. Laisse vide pour afficher l'image. Sert d'aperçu : garde-la légère (~5 s)." }
 
   # ======================= CONTACT =======================
   - name: "contact"
