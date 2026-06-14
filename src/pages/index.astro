@@ -8,6 +8,7 @@ import TrustBand from "../components/TrustBand.astro";
 import KeyNumbers from "../components/KeyNumbers.astro";
 import RecentWork from "../components/RecentWork.astro";
 import ServicesPreview from "../components/ServicesPreview.astro";
+import VideoFeature from "../components/VideoFeature.astro";
 import AboutTeaser from "../components/AboutTeaser.astro";
 import ApproachBlock from "../components/ApproachBlock.astro";
 import FinalCTA from "../components/FinalCTA.astro";
@@ -52,6 +53,7 @@ const lp = (p: string) => localePath(lang, p);
 
   <Section label={t.sections.whatIShoot.label} title={t.sections.whatIShoot.title}>
     <ServicesPreview />
+    <VideoFeature />
   </Section>
 
   <Section>
