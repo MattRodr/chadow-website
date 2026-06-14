@@ -21,17 +21,7 @@ const v = loopEmbed(video);
 const ctaLabel = t.cta[ctaKey];
 ---
 <article class="svd">
-  <figure class="svd__media" data-reveal="up">
-    {v?.provider === "file" ? (
-      <video src={v.src} poster={image} autoplay muted loop playsinline preload="metadata"></video>
-    ) : v ? (
-      <iframe src={v.embed} title={item.title} loading="lazy" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
-    ) : (
-      <img src={image} alt={item.title} loading="lazy" />
-    )}
-  </figure>
-
-  <div class="svd__grid" data-reveal data-reveal-delay="100">
+  <div class="svd__grid" data-reveal>
     <div class="svd__main">
       <p class="svd__num">{num}</p>
       <h3 class="svd__title">{item.title}</h3>
@@ -60,6 +50,16 @@ const ctaLabel = t.cta[ctaKey];
       </div>
     </div>
   </div>
+
+  <figure class="svd__media" data-reveal="up" data-reveal-delay="100">
+    {v?.provider === "file" ? (
+      <video src={v.src} poster={image} autoplay muted loop playsinline preload="metadata"></video>
+    ) : v ? (
+      <iframe src={v.embed} title={item.title} loading="lazy" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    ) : (
+      <img src={image} alt={item.title} loading="lazy" />
+    )}
+  </figure>
 </article>
 
 <style>
@@ -70,7 +70,7 @@ const ctaLabel = t.cta[ctaKey];
 
   /* Vidéo cinématique pleine largeur */
   .svd__media {
-    margin: 0 0 clamp(28px, 4vw, 48px);
+    margin: clamp(28px, 4vw, 48px) 0 0;
     aspect-ratio: 16 / 9;
     border-radius: var(--radius);
     overflow: hidden;
